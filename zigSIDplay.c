@@ -3,8 +3,9 @@
 //                                                    (afk aka Mario Schallner)
 // ------------------------------------------------------------------------------
 //
-// supposed to become a SID player using reSID, SDL or sound.io,
-// ... first in C (zig build), then rewrite in zig.
+// supposed to become a SID player using reSID feeding SDL or sound.io
+// audiostream, ... first in C (zig drop in compiler, then zig build), 
+// then rewrite in zig.
 
 #include <stdio.h>
 #include <stdlib.h>
