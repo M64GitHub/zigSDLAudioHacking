@@ -1,11 +1,11 @@
 // ------------------------------------------------------------------------------
-// zigSIDplay                                                         2023, M64
-//                                                    (afk aka Mario Schallner)
+// zigSIDplay                                                           2023, M64
+//                                                      (afk aka Mario Schallner)
 // ------------------------------------------------------------------------------
 //
-// supposed to become a SID player using reSID feeding SDL or sound.io
-// audiostream, ... first in C (zig drop in compiler, then zig build), 
-// then rewrite in zig.
+// Supposed to become a SID player by running .sid files in a virtual C64 CPU and
+// using reSID for audio generation to feed SDL or SoundIO audiostreams, ... 
+// first in C (zig drop in compiler, then zig build), then rewrite in zig.
 
 #include <stdio.h>
 #include <stdlib.h>
