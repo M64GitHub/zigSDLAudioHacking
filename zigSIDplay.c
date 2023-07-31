@@ -10,9 +10,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <SDL2/SDL.h>
 
 #include "zigSIDplay.h"
-#include <SDL2/SDL.h>
 
 // -- DEFAULTs, if not 0:
 
