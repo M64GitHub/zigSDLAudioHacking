@@ -36,5 +36,6 @@ typedef struct sid_file_s {
 } SID_FILE;
 
 void init_cmdline_args(CMDLINE_ARGS *args);
+int init_sdl();
 
 #endif
