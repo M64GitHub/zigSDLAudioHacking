@@ -60,7 +60,7 @@ int init_sdl() {
   // Open the audio device.
   result = SDL_OpenAudio(&audiospec, NULL);
   if (result == 0) {
-    // Begin playback.
+    // Wait until we have set up the audiostream(s)
     SDL_PauseAudio(0);
     printf("OK!: AudioDevice opened ....\n");
   }
