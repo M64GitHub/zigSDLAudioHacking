@@ -1,21 +1,5 @@
 // zigSIDplay, 2023, M64
-
-#define MAX_INSTR 0x100000
-
-typedef struct {
-  unsigned short freq;
-  unsigned short pulse;
-  unsigned short adsr;
-  unsigned char wave;
-  int note;
-} CHANNEL;
-
-typedef struct {
-  unsigned short cutoff;
-  unsigned char ctrl;
-  unsigned char type;
-} FILTER;
-
+#include "SID.h"
 
 CHANNEL chn[3];
 CHANNEL prevchn[3];
@@ -59,5 +43,4 @@ unsigned char freqtblhi[] = {
     0x45, 0x49, 0x4e, 0x52, 0x57, 0x5c, 0x62, 0x68, 0x6e, 0x75, 0x7c, 0x83,
     0x8b, 0x93, 0x9c, 0xa5, 0xaf, 0xb9, 0xc4, 0xd0, 0xdd, 0xea, 0xf8, 0xff};
 
-int sid_init() {
-}
+int sid_init() { return 0; }
