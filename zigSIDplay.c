@@ -46,6 +46,7 @@ int init_sdl() {
     SDL_AudioSpec audiospec;
     long result;
 
+    // Initialise SDL audio subsystem only
     if(SDL_Init(SDL_INIT_AUDIO)) {
         printf("Error: initializing SDL_AUDIO: %s", SDL_GetError());
         return 2;
@@ -59,12 +60,7 @@ int init_sdl() {
     audiospec.samples = BUFFER_SAMPLES;
     //   audiospec.callback = audio_callback;
     audiospec.userdata = NULL;
-    // Initialise audio subsystem.
-    result = SDL_Init(SDL_INIT_AUDIO);
-    if (result != 0) {
-        printf("Error: SDL audio initialization failed \n");
-        return 1;
-    }
+
     // Open the audio device.
     result = SDL_OpenAudio(&audiospec, NULL);
     if (result == 0) {
