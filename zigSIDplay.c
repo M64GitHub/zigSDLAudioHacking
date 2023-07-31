@@ -20,6 +20,7 @@
 #define ARG_DEFAULT_OLDNOTEFACTOR 1     // 
 
 // -- SDL2 stuff
+
 #define SAMPLING_FREQ 48000  // 48khz.
 #define REVERB_BUF_LEN 4800  // 50ms.
 #define OVERSAMPLE 2         // 2x oversampling.
