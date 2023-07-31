@@ -11,12 +11,21 @@
 #include <string.h>
 
 #include "zigSIDplay.h"
+#include <SDL2/SDL.h>
 
 // DEFAULTs, if not 0:
 
 #define ARG_DEFAULT_SECONDS 60
 #define ARG_DEFAULT_BASENOTE 0xB0
 #define ARG_DEFAULT_OLDNOTEFACTOR 1
+
+// SDL2 stuff
+#define SAMPLING_FREQ 48000  /* 48khz. */
+#define REVERB_BUF_LEN 4800  /* 50ms. */
+#define OVERSAMPLE 2         /* 2x oversampling. */
+#define NUM_CHANNELS 2       /* Stereo. */
+#define BUFFER_SAMPLES 16384 /* 64k buffer. */
+
 
 // -- helpers
 
@@ -36,6 +45,33 @@ int main(int argc, char **argv) {
   init_cmdline_args(&args);
 
   printf("Hello Mario64World!\n");
+
+  long result;
+  SDL_AudioSpec audiospec;
+  SDL_Init(SDL_INIT_AUDIO);
+
+  /* Initialise SDL_AudioSpec Structure. */
+  memset(&audiospec, 0, sizeof(SDL_AudioSpec));
+  audiospec.freq = SAMPLING_FREQ;
+  audiospec.format = AUDIO_S16SYS;
+  audiospec.channels = NUM_CHANNELS;
+  audiospec.samples = BUFFER_SAMPLES;
+  //   audiospec.callback = audio_callback;
+  audiospec.userdata = NULL;
+  /* Initialise audio subsystem. */
+  result = SDL_Init(SDL_INIT_AUDIO);
+  if (result != 0) {
+    printf("Error: couldn't open SID file.\n");
+    return 1;
+  }
+  /* Open the audio device. */
+  result = SDL_OpenAudio(&audiospec, NULL);
+  if (result == 0) {
+    /* Begin playback. */
+    SDL_PauseAudio(0);
+    printf("OK!: AudioDevice opened ....\n");
+  }
+
 
   return 0;
 }
