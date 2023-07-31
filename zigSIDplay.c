@@ -46,7 +46,7 @@ int init_sdl() {
     SDL_AudioSpec audiospec;
     long result;
 
-    if(!SDL_Init(SDL_INIT_AUDIO)) {
+    if(SDL_Init(SDL_INIT_AUDIO)) {
         printf("Error: initializing SDL_AUDIO: %s", SDL_GetError());
         return 2;
     }
