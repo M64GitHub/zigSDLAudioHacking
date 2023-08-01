@@ -1,4 +1,3 @@
-// zigSIDplay, 2023, M64
 #include "SID.h"
 
 CHANNEL chn[3];

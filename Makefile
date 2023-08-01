@@ -1,5 +1,7 @@
-# zigSIDplay                                                          2023, M64
-#                                                       afk aka Mario Schallner
+# -------------------------------------------------------------------------- #
+# zigSIDplay                                                       2023, M64 #
+#                                                  (afk aka Mario Schallner) #
+# -------------------------------------------------------------------------- #
 
 BINARY=zigSIDplay
 CC=zig cc

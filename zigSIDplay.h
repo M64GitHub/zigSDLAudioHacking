@@ -1,7 +1,6 @@
-// zigSIDplay, 2023, M64
-
 #ifndef ZIGSIDPLAY_H
 #define ZIGSIDPLAY_H
+
 #include <stdio.h>
 
 typedef struct cmdline_args_s {
@@ -17,13 +16,14 @@ typedef struct cmdline_args_s {
   int basenote;
   int lowres;
   int rows;
-  int oldnotefactor;
   int timeseconds;
   int usage;
   int profiling;
+
 } CMDLINE_ARGS;
 
 typedef struct sid_file_s {
+  FILE *in;
   unsigned loadend;
   unsigned loadpos;
   unsigned loadsize;
@@ -31,7 +31,6 @@ typedef struct sid_file_s {
   unsigned initaddress;
   unsigned playaddress;
   unsigned dataoffset;
-  FILE *in;
   char *sidname;
 } SID_FILE;
 
