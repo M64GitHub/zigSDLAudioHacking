@@ -9,7 +9,7 @@ CXX=zig c++
 CFLAGS+=-O3 -Wall
 CXXFLAGS=$(CFLAGS)
 
-$(BINARY): zigSIDplay.o cpu.o
+$(BINARY): zigSIDplay.o cpu.o sidfile.o
 	$(CXX) -o $@ $^ -lm -lSDL2
 #	echo $(CXX) -o $@ $^ -lm `sdl2-config --cflags --libs`
 

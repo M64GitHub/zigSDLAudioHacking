@@ -10,14 +10,17 @@
  |                                                                          |
 \*==========================================================================*/
 
-#include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "zigSIDplay.h"
+#include <SDL2/SDL.h>
 
-// -- DEFAULTs, if not 0:
+#include "zigSIDplay.h"
+#include "sidfile.h"
+
+
+// -- ARG DEFAULTs, if not 0:
 
 #define ARG_DEFAULT_BASENOTE 0xB0
 
@@ -44,9 +47,9 @@ int init_sdl() {
     SDL_AudioSpec audiospec;
     long result;
 
-    // Initialise SDL audio subsystem only
+    // initialise SDL audio subsystem only
     if (SDL_Init(SDL_INIT_AUDIO)) {
-        printf("Error: initializing SDL_AUDIO: %s", SDL_GetError());
+        printf("[ERR] initializing SDL_AUDIO subsystem: %s", SDL_GetError());
         return 2;
     }
 
@@ -63,7 +66,7 @@ int init_sdl() {
     if (result == 0) {
         // Wait until we have set up the audiostream(s)
         SDL_PauseAudio(0);
-        printf("OK!: AudioDevice opened ....\n");
+        printf("[OK!] sdl audio device opened\n");
     }
 
     return 0;
