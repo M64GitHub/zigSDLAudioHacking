@@ -4,9 +4,9 @@
                                                                             |
  +--------------------------------------------------------------------------+
  |
- |   supposed to become a SID player using reSID feeding SDL or sound.io
- |   audiostream, ... first in C (zig drop in compiler, then zig build),
- |   then rewrite in zig.                                                   ^
+ |   supposed to become a SID player utilizing reSID to feed an SDL audio-
+ |   stream. resid is fed with register-changes to it's sound shap
+ |                                                                          ^
  |                                                                          |
 \*==========================================================================*/
 
@@ -108,13 +108,13 @@ int main(int argc, char **argv) {
   cpu1.mem[0x006] = 0x69;
   cpu1.mem[0x007] = 0x03;
   run_cpu(&cpu1);
-  debug_cpu_regs(&cpu1);
+  dmp_cpu_regs(&cpu1);
 
   // add 0xff -> overflow
   cpu1.mem[0x008] = 0x69;
   cpu1.mem[0x009] = 0xff;
   run_cpu(&cpu1);
-  debug_cpu_regs(&cpu1);
+  dmp_cpu_regs(&cpu1);
 
   return 0;
 }

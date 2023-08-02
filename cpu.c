@@ -27,7 +27,7 @@ void init_cpu(CPU_6510 *cpu, unsigned short newpc, unsigned char newa,
   cpu->cycles = 0;
 }
 
-void debug_cpu_regs(CPU_6510 *cpu) {
+void dmp_cpu_regs(CPU_6510 *cpu) {
   printf(
       "[DBG][CPU][DMP] PC: %04x        A:%02x X:%02x Y:%02x     FLAGS: %02x\n",
       cpu->pc, cpu->a, cpu->x, cpu->y, cpu->flags);
