@@ -66,6 +66,7 @@ int init_sdl() {
 
   // open audio device
   result = SDL_OpenAudio(&audiospec, NULL);
+
   if (result == 0) {
     // Wait until we have set up the audiostream(s)
     SDL_PauseAudio(0);
@@ -80,32 +81,40 @@ int init_sdl() {
 }
 
 int main(int argc, char **argv) {
-    CMDLINE_ARGS args;
-    SID_FILE sidfile;
+  CMDLINE_ARGS args;
+  SID_FILE sidfile;
 
-    init_cmdline_args(&args);
+  init_cmdline_args(&args);
 
-    if (init_sdl()) return 1;
+  if (init_sdl())
+    return 1;
 
-    // -- test cpu
-    
-    //              PC      A     X     Y
-    init_cpu(&cpu1, 0x0000, 0x10, 0x00, 0x00);
+  // -- test cpu
 
-    // -- test ASL
-    memset(cpu1.mem, 0x0a, 0x10);
-    run_cpu(&cpu1);
-    run_cpu(&cpu1);
-    run_cpu(&cpu1);
-    run_cpu(&cpu1);
-    run_cpu(&cpu1);
-    run_cpu(&cpu1);
+  //              PC      A     X     Y
+  init_cpu(&cpu1, 0x0000, 0x10, 0x00, 0x00);
 
-    // -- test ADC: add 3 to a
-    cpu1.mem[0x006] = 0x69;
-    cpu1.mem[0x007] = 0x03;
-    run_cpu(&cpu1);
-    debug_cpu_regs(&cpu1);
-    
-    return 0;
+  // -- test ASL
+  memset(cpu1.mem, 0x0a, 0x10);
+  run_cpu(&cpu1);
+  run_cpu(&cpu1);
+  run_cpu(&cpu1);
+  run_cpu(&cpu1);
+  run_cpu(&cpu1);
+  run_cpu(&cpu1);
+
+  // -- test ADC:
+  // add 3 to a
+  cpu1.mem[0x006] = 0x69;
+  cpu1.mem[0x007] = 0x03;
+  run_cpu(&cpu1);
+  debug_cpu_regs(&cpu1);
+
+  // add 0xfe -> overflow
+  cpu1.mem[0x008] = 0x69;
+  cpu1.mem[0x009] = 0xff;
+  run_cpu(&cpu1);
+  debug_cpu_regs(&cpu1);
+
+  return 0;
 }

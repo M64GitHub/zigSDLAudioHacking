@@ -28,8 +28,8 @@ void init_cpu(CPU_6510 *cpu, unsigned short newpc, unsigned char newa,
 }
 
 void debug_cpu_regs(CPU_6510 *cpu) {
-  printf("[DBG][CPU] PC: %04x A:%02x X:%02x Y:%02x    FLAGS: %02x\n", cpu->pc,
-         cpu->a, cpu->x, cpu->y, cpu->flags);
+  printf("[DBG][CPU] PC: %04x        A:%02x X:%02x Y:%02x     FLAGS: %02x\n",
+         cpu->pc, cpu->a, cpu->x, cpu->y, cpu->flags);
 }
 
 int run_cpu(CPU_6510 *cpu) {
