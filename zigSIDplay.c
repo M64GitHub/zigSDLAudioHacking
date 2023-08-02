@@ -101,7 +101,7 @@ int main(int argc, char **argv) {
     run_cpu(&cpu1);
     run_cpu(&cpu1);
 
-    // -- test ADC
+    // -- test ADC: add 3 to a
     cpu1.mem[0x006] = 0x69;
     cpu1.mem[0x007] = 0x03;
     run_cpu(&cpu1);
