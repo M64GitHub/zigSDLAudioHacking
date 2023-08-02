@@ -69,6 +69,10 @@ int init_sdl() {
     // Wait until we have set up the audiostream(s)
     SDL_PauseAudio(0);
     printf("[OK!] sdl audio device opened\n");
+    return 0;
+  } else {
+    printf("[ERR] initializing audio device: %s", SDL_GetError());
+    return 1;
   }
 
   return 0;
