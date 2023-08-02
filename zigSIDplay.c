@@ -110,7 +110,7 @@ int main(int argc, char **argv) {
   run_cpu(&cpu1);
   debug_cpu_regs(&cpu1);
 
-  // add 0xfe -> overflow
+  // add 0xff -> overflow
   cpu1.mem[0x008] = 0x69;
   cpu1.mem[0x009] = 0xff;
   run_cpu(&cpu1);
