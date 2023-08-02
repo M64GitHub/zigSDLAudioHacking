@@ -56,6 +56,7 @@ int init_sdl() {
     return 2;
   }
 
+  // configure audio device struct
   memset(&audiospec, 0, sizeof(SDL_AudioSpec));
   audiospec.freq = SAMPLING_FREQ;
   audiospec.format = AUDIO_S16SYS;
@@ -63,7 +64,7 @@ int init_sdl() {
   audiospec.samples = BUFFER_SAMPLES;
   audiospec.userdata = NULL;
 
-  // Open the audio device
+  // open audio device
   result = SDL_OpenAudio(&audiospec, NULL);
   if (result == 0) {
     // Wait until we have set up the audiostream(s)
@@ -79,23 +80,28 @@ int init_sdl() {
 }
 
 int main(int argc, char **argv) {
+    CMDLINE_ARGS args;
+    SID_FILE sidfile;
 
-  CMDLINE_ARGS args;
-  SID_FILE sidfile;
+    init_cmdline_args(&args);
 
-  init_cmdline_args(&args);
+    if (init_sdl()) return 1;
 
-  if (init_sdl())
-    return 1;
+    // test init cpu, a: 0x010
+    //              PC      A     X     Y
+    init_cpu(&cpu1, 0x0000, 0x10, 0x00, 0x00);
 
-  init_cpu(&cpu1, 0xfffd, 0, 0, 0);
+    // add some instructions to memory to test run :
+    // 0x0a: ASL 
+    memset(cpu1.mem, 0x0a, 0x10);
 
-  run_cpu(&cpu1);
-  run_cpu(&cpu1);
-  run_cpu(&cpu1);
-  run_cpu(&cpu1);
-  run_cpu(&cpu1);
-  run_cpu(&cpu1);
+    // run a few steps
+    run_cpu(&cpu1);
+    run_cpu(&cpu1);
+    run_cpu(&cpu1);
+    run_cpu(&cpu1);
+    run_cpu(&cpu1);
+    run_cpu(&cpu1);
 
-  return 0;
+    return 0;
 }
