@@ -27,6 +27,10 @@ void init_cpu(CPU_6510 *cpu, unsigned short newpc, unsigned char newa,
   cpu->cycles = 0;
 }
 
+void debug_cpu_regs(CPU_6510 *cpu) {
+  printf("PC: %04x A:%02x X:%02x Y:%02x\n", cpu->pc, cpu->a, cpu->x, cpu->y);
+}
+
 int run_cpu(CPU_6510 *cpu) {
   unsigned temp;
 

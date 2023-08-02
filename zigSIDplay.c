@@ -87,15 +87,13 @@ int main(int argc, char **argv) {
 
     if (init_sdl()) return 1;
 
-    // test init cpu, a: 0x010
+    // -- test cpu
+    
     //              PC      A     X     Y
     init_cpu(&cpu1, 0x0000, 0x10, 0x00, 0x00);
 
-    // add some instructions to memory to test run :
-    // 0x0a: ASL 
+    // -- test ASL
     memset(cpu1.mem, 0x0a, 0x10);
-
-    // run a few steps
     run_cpu(&cpu1);
     run_cpu(&cpu1);
     run_cpu(&cpu1);
@@ -103,5 +101,11 @@ int main(int argc, char **argv) {
     run_cpu(&cpu1);
     run_cpu(&cpu1);
 
+    // -- test ADC
+    cpu1.mem[0x006] = 0x69;
+    cpu1.mem[0x007] = 0x03;
+    run_cpu(&cpu1);
+    debug_cpu_regs(&cpu1);
+    
     return 0;
 }

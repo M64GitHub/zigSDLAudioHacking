@@ -16,6 +16,7 @@ void init_cpu(CPU_6510 *cpu, unsigned short newpc, unsigned char newa,
               unsigned char newx, unsigned char newy);
 
 int run_cpu(CPU_6510 *cpu);
+void debug_cpu_regs(CPU_6510 *cpu);
 
 // --
 
