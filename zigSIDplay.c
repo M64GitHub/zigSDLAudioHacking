@@ -16,9 +16,9 @@
 
 #include <SDL2/SDL.h>
 
-#include "zigSIDplay.h"
-#include "sidfile.h"
 #include "cpu.h"
+#include "sidfile.h"
+#include "zigSIDplay.h"
 
 SID_FILE sf1;
 CPU_6510 cpu1;
@@ -76,12 +76,22 @@ int init_sdl() {
 
 int main(int argc, char **argv) {
 
-    CMDLINE_ARGS args;
-    SID_FILE sidfile;
+  CMDLINE_ARGS args;
+  SID_FILE sidfile;
 
-    init_cmdline_args(&args);
+  init_cmdline_args(&args);
 
-    if (init_sdl()) return 1;
+  if (init_sdl())
+    return 1;
 
-    return 0;
+  init_cpu(&cpu1, 0xfffd, 0, 0, 0);
+
+  run_cpu(&cpu1);
+  run_cpu(&cpu1);
+  run_cpu(&cpu1);
+  run_cpu(&cpu1);
+  run_cpu(&cpu1);
+  run_cpu(&cpu1);
+
+  return 0;
 }
