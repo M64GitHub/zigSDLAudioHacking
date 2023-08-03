@@ -23,7 +23,6 @@ $(BINARY): zigSIDplay.o zsp_cpu.o zsp_sid_music_file.o zsp_sdl_audio.o \
 	reSID/wave.o
 
 	$(CXX) -o $@ $^ -lm -lSDL2 
-#	echo $(CXX) -o $@ $^ -lm `sdl2-config --cflags --libs`
 
 clean:
 	$(RM) *.o reSID/*.o $(BINARY)
