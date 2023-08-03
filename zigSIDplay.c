@@ -16,8 +16,8 @@
 #include <string.h>
 
 #include <SDL2/SDL.h>
-
 #include "zsp_sdl_audio.h"
+
 #include "zsp_cpu.h"
 #include "zsp_sid_music_file.h"
 #include "zigSIDplay.h"
