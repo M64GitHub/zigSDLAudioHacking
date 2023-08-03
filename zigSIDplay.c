@@ -102,7 +102,6 @@ int init_sdl_audio() {
   }
   printf("[OK!] SDL2 audio device opened %d\n", AUDIO_DEV_ID);
 
-    SDL_Delay(1000 * 1);
   // audio devices default to being paused, so turn off pause
     SDL_PauseAudioDevice(AUDIO_DEV_ID, 0);
 
