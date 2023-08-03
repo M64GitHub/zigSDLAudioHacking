@@ -17,21 +17,54 @@ static const int cpucycles_table[] = {
     2, 4, 2, 7, 4, 4, 7, 7, 2, 6, 2, 8, 3, 3, 5, 5, 2, 2, 2, 2, 4, 4, 6, 6,
     2, 5, 0, 8, 4, 4, 6, 6, 2, 4, 2, 7, 4, 4, 7, 7};
 
-void init_cpu(CPU_6510 *cpu, unsigned short newpc, unsigned char newa,
-              unsigned char newx, unsigned char newy) {
-  cpu->pc = newpc;
-  cpu->a = newa;
-  cpu->x = newx;
-  cpu->y = newy;
-  cpu->flags = 0;
-  cpu->sp = 0xff;
-  cpu->cycles = 0;
+void init_cpu(CPU_6510 *cpu, 
+              unsigned short newpc, 
+              unsigned char newa,
+              unsigned char newx, 
+              unsigned char newy) {
+    cpu->pc = newpc;
+
+    cpu->a  = newa;
+    cpu->x  = newx;
+    cpu->y  = newy;
+
+    cpu->sp = 0xff;
+    cpu->flags = 0;
+    cpu->cycles = 0;
 }
 
 void dmp_cpu_regs(CPU_6510 *cpu) {
-  printf(
-      "[DBG][CPU][DMP] PC: %04x        A:%02x X:%02x Y:%02x     FLAGS: %02x\n",
-      cpu->pc, cpu->a, cpu->x, cpu->y, cpu->flags);
+    printf(
+    "[DBG][CPU][DMP] PC: %04x        A:%02x X:%02x Y:%02x     FLAGS: %02x\n",
+    cpu->pc, cpu->a, cpu->x, cpu->y, cpu->flags);
+}
+
+void test_cpu(CPU_6510 *cpu) {
+    printf("[DBG] testing cpu\n");
+    //              PC      A     X     Y
+    init_cpu(cpu, 0x0000, 0x10, 0x00, 0x00);
+
+    // -- test ASL
+    memset(cpu->mem, 0x0a, 0x10);
+    run_cpu(cpu);
+    run_cpu(cpu);
+    run_cpu(cpu);
+    run_cpu(cpu);
+    run_cpu(cpu);
+    run_cpu(cpu);
+
+    // -- test ADC:
+    // add 3 to a
+    cpu->mem[0x006] = 0x69;
+    cpu->mem[0x007] = 0x03;
+    run_cpu(cpu);
+    dmp_cpu_regs(cpu);
+
+    // add 0xff -> overflow
+    cpu->mem[0x008] = 0x69;
+    cpu->mem[0x009] = 0xff;
+    run_cpu(cpu);
+    dmp_cpu_regs(cpu);
 }
 
 int run_cpu(CPU_6510 *cpu) {
@@ -933,32 +966,4 @@ int run_cpu(CPU_6510 *cpu) {
 }
 
 void setpc(CPU_6510 *cpu, unsigned short newpc) { cpu->pc = newpc; }
-
-void test_cpu(CPU_6510 *cpu) {
-    printf("[DBG] testing cpu\n");
-    //              PC      A     X     Y
-    init_cpu(cpu, 0x0000, 0x10, 0x00, 0x00);
-
-    // -- test ASL
-    memset(cpu->mem, 0x0a, 0x10);
-    run_cpu(cpu);
-    run_cpu(cpu);
-    run_cpu(cpu);
-    run_cpu(cpu);
-    run_cpu(cpu);
-    run_cpu(cpu);
-
-    // -- test ADC:
-    // add 3 to a
-    cpu->mem[0x006] = 0x69;
-    cpu->mem[0x007] = 0x03;
-    run_cpu(cpu);
-    dmp_cpu_regs(cpu);
-
-    // add 0xff -> overflow
-    cpu->mem[0x008] = 0x69;
-    cpu->mem[0x009] = 0xff;
-    run_cpu(cpu);
-    dmp_cpu_regs(cpu);
-}
 
