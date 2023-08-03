@@ -3,7 +3,7 @@
  v 00.0.0-dev                                     ( afk aka Mario Schallner )
                                                                             |
  +--------------------------------------------------------------------------+
- |     Supposed to become a SID player utilizing an SDL2 AudioQueue to
+ |     Aimed to become a SID player utilizing an SDL2 AudioQueue to
  |     output sound. The sound is generated utilizing a virtual C64 cpu
  |     to send register changes to a virtual C64 soundchip (SID) emulated
  |     by reSID code. 
