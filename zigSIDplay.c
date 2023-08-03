@@ -45,6 +45,7 @@ void init_cmdline_args(CMDLINE_ARGS *args) {
 int parse_cmdline(CMDLINE_ARGS *args) { return 0; }
 
 void test_cpu(CPU_6510 *cpu) {
+  printf("[DBG] testing cpu\n");
   //              PC      A     X     Y
   init_cpu(cpu, 0x0000, 0x10, 0x00, 0x00);
 
@@ -100,7 +101,7 @@ int init_sdl_audio() {
     printf("[ERR] initializing audio device: %s", SDL_GetError());
     return 1;
   }
-  printf("[OK!] SDL2 audio device opened %d\n", AUDIO_DEV_ID);
+  printf("[OK!] SDL2 audio device opened: ID:%d\n", AUDIO_DEV_ID);
 
   // audio devices default to being paused, so turn off pause
     SDL_PauseAudioDevice(AUDIO_DEV_ID, 0);
@@ -122,11 +123,11 @@ void test_audio() {
         // if(i < freq) printf("f: %f (%d)\n",f, (char)f);
     }
 
-    printf("Queuing audio ...\n");
+    printf("[DBG] Queuing audio ...\n");
     int err;
 
     for(int i=0; i<3; i++) {
-        printf("Queuing audio %d ...\n", i);
+        printf("[DBG] Queuing audio %d ...\n", i);
         err=SDL_QueueAudio(AUDIO_DEV_ID, testbuf, 48000);
         if(err) printf("[ERR] initializing audio device: %s", SDL_GetError());
     }
