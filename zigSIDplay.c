@@ -110,7 +110,7 @@ int init_sdl_audio() {
 }
 
 void test_audio() {
-    char testbuf[48000 + 1]; // 1 sec
+    char testbuf[48000]; // 1 sec
     float f;
     float PI = 3.141592;
    
@@ -126,29 +126,10 @@ void test_audio() {
     printf("Queuing audio ...\n");
     int err;
 
-    printf("Queuing audio ...\n");
-    err=SDL_QueueAudio(AUDIO_DEV_ID, testbuf, 48000);
-    printf("[ERR][AUDIO][TEST] %d: %s\n", err, SDL_GetError());
-
-    printf("Queuing audio ...\n");
-    err=SDL_QueueAudio(AUDIO_DEV_ID, testbuf, 48000);
-    printf("[ERR][AUDIO][TEST] %d: %s\n", err, SDL_GetError());
-     
-    printf("Queuing audio ...\n");
-    err=SDL_QueueAudio(AUDIO_DEV_ID, testbuf, 48000);
-    printf("[ERR][AUDIO][TEST] %d: %s\n", err, SDL_GetError());
-     
-    printf("Queuing audio ...\n");
-    err=SDL_QueueAudio(AUDIO_DEV_ID, testbuf, 48000);
-    printf("[ERR][AUDIO][TEST] %d: %s\n", err, SDL_GetError());
-     
-    printf("Queuing audio ...\n");
-    err=SDL_QueueAudio(AUDIO_DEV_ID, testbuf, 48000);
-    printf("[ERR][AUDIO][TEST] %d: %s\n", err, SDL_GetError());
-     
-    printf("Queuing audio ...\n");
-    err=SDL_QueueAudio(AUDIO_DEV_ID, testbuf, 48000);
-    printf("[ERR][AUDIO][TEST] %d: %s\n", err, SDL_GetError());
+    for(int i=0; i<3; i++) {
+        printf("Queuing audio %d ...\n", i);
+        err=SDL_QueueAudio(AUDIO_DEV_ID, testbuf, 48000);
+    }
 }
 
 // --
@@ -169,7 +150,8 @@ int main(int argc, char **argv) {
 
   test_audio();
 
-    SDL_Delay(5000);
+  printf("[INF] waiting 3 seconds for sound to finish ...\n");
+  SDL_Delay(3000);
 
   return 0;
 }
