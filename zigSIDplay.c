@@ -49,8 +49,6 @@ int parse_cmdline(CMDLINE_ARGS *args) {
     return 0; 
 }
 
-// -- AUDIO
-
 // --
 
 int main(int argc, char **argv) {
@@ -58,6 +56,7 @@ int main(int argc, char **argv) {
     init_cmdline_args(&args);
 
     if (parse_cmdline(&args)) return 1;
+
     if (init_sdl_audio(&ZSP_AudioDevID, 
                        &ZSP_AudioSpec,
                         SAMPLING_FREQ,
