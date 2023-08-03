@@ -23,6 +23,5 @@ typedef struct cmdline_args_s {
 
 void init_cmdline_args(CMDLINE_ARGS *args);
 
-int  init_sdl_audio();
 
 #endif

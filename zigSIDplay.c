@@ -17,6 +17,7 @@
 
 #include <SDL2/SDL.h>
 
+#include "sdl_audio.h"
 #include "cpu.h"
 #include "sidfile.h"
 #include "zigSIDplay.h"
@@ -31,10 +32,11 @@
 
 // --
 
-CPU_6510 cpu1;
-SID_FILE sidfile1;
+CPU_6510 ZSP_CPU1;
+SID_FILE ZSP_SIDFile1;
 
-SDL_AudioDeviceID AUDIO_DEV_ID;
+SDL_AudioDeviceID   ZSP_AudioDevID;
+SDL_AudioSpec       ZSP_AudioSpec;
 
 // -- helpers
 
@@ -49,66 +51,6 @@ int parse_cmdline(CMDLINE_ARGS *args) {
 
 // -- AUDIO
 
-int init_sdl_audio() {
-    SDL_AudioSpec audiospec;
-
-    // initialise SDL audio subsystem only
-    if (SDL_Init(SDL_INIT_AUDIO)) {
-        printf("[ERR] initializing SDL_AUDIO subsystem: %s\n", SDL_GetError());
-        return 2;
-    }
-
-    printf("[OK!] SDL2 audio subsystem initialized\n");
-
-    // configure audio device struct
-    memset(&audiospec, 0, sizeof(SDL_AudioSpec));
-
-    audiospec.freq      = SAMPLING_FREQ;
-    audiospec.format    = AUDIO_S8;         // 8 bit
-    audiospec.channels  = NUM_CHANNELS;     // mono  / stereo
-    audiospec.samples   = SIZE_AUDIO_BUF;   // size in samples
-    audiospec.userdata  = NULL;
-    audiospec.callback  = NULL;             // we use SDL_QueueAudio
-
-    // use new interface, let QueueAudio convert
-    AUDIO_DEV_ID = SDL_OpenAudioDevice(NULL, 0, &audiospec, NULL, 0);
-
-    if (AUDIO_DEV_ID < 1) {
-        printf("[ERR] initializing audio device: %s", SDL_GetError());
-        return 1;
-    }
-    printf("[OK!] SDL2 audio device opened: ID:%d\n", AUDIO_DEV_ID);
-
-    // audio devices default to being paused, so turn off pause
-    SDL_PauseAudioDevice(AUDIO_DEV_ID, 0);
-
-    return 0;
-}
-
-void test_audio() {
-    char testbuf[48000]; // 1 sec
-    float f;
-    float PI = 3.141592;
-   
-    float ampl = 120.0;
-    float freq = 400.0;
-    for(int i=0; i<(48000 / 2); i++){
-        f = ampl * sin((float)i/freq *2*PI);
-        testbuf[i] = f;
-        testbuf[i+1] = f;
-        // if(i < freq) printf("f: %f (%d)\n",f, (char)f);
-    }
-
-    printf("[DBG] Queuing audio ...\n");
-    int err;
-
-    for(int i=0; i<3; i++) {
-        printf("[DBG] Queuing audio %d ...\n", i);
-        err=SDL_QueueAudio(AUDIO_DEV_ID, testbuf, 48000);
-        if(err) printf("[ERR] initializing audio device: %s", SDL_GetError());
-    }
-}
-
 // --
 
 int main(int argc, char **argv) {
@@ -116,10 +58,15 @@ int main(int argc, char **argv) {
     init_cmdline_args(&args);
 
     if (parse_cmdline(&args)) return 1;
-    if (init_sdl_audio())     return 2;
+    if (init_sdl_audio(&ZSP_AudioDevID, 
+                       &ZSP_AudioSpec,
+                        SAMPLING_FREQ,
+                        NUM_CHANNELS,
+                        SIZE_AUDIO_BUF))
+    return 2;
 
-    test_cpu(&cpu1);
-    test_audio();
+    test_cpu(&ZSP_CPU1);
+    test_audio(ZSP_AudioDevID);
 
     printf("[INF] waiting 3 seconds for sound to finish ...\n");
     SDL_Delay(3000);
