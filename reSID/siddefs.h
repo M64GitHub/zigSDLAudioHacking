@@ -20,6 +20,7 @@
 #ifndef __SIDDEFS_H__
 #define __SIDDEFS_H__
 
+#include <SDL2/SDL.h>
 // Define bool, true, and false for C++ compilers that lack these keywords.
 #define RESID_HAVE_BOOL 1
 
@@ -55,8 +56,7 @@ const bool false = 0;
 // cycle_count, and sound_sample). GNU does not support 16-bit machines
 // (GNU Coding Standards: Portability between CPUs), so this should be
 // a valid assumption.
-#include <Arduino.h>
-typedef uint16_t reg4;
+typedef Sint16 reg4;
 typedef uint16_t reg8;
 typedef uint16_t reg12;
 typedef uint16_t reg16;
@@ -70,15 +70,16 @@ typedef sound_sample fc_point[2];
 
 enum sampling_method { SAMPLE_FAST, SAMPLE_INTERPOLATE};
 
-extern "C"
-{
-#ifndef __VERSION_CC__
-extern const char* resid_version_string;
-#else
-const char* resid_version_string = VERSION;
-#endif
-}
-
+// extern "C"
+// {
+// #ifndef __VERSION_CC__
+// extern const char* resid_version_string;
+// #else
+// const char* resid_version_string = VERSION;
+// #endif
+// }
+//
 RESID_NAMESPACE_STOP
 
-#endif // not __SIDDEFS_H__
+#endif 
+

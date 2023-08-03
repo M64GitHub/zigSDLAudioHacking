@@ -176,7 +176,7 @@ const reg8 EnvelopeGenerator::sustain_level[] = {
 
 
 // ----------------------------------------------------------------------------
-// Register functions.
+// Register functions. lalala
 // ----------------------------------------------------------------------------
 void EnvelopeGenerator::writeCONTROL_REG(reg8 control)
 {
