@@ -115,14 +115,10 @@ int main(int argc, char **argv) {
     CMDLINE_ARGS args;
     init_cmdline_args(&args);
 
-    if (parse_cmdline(&args))
-    return 1;
-
-    if (init_sdl_audio())
-    return 2;
+    if (parse_cmdline(&args)) return 1;
+    if (init_sdl_audio())     return 2;
 
     test_cpu(&cpu1);
-
     test_audio();
 
     printf("[INF] waiting 3 seconds for sound to finish ...\n");
