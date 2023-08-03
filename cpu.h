@@ -2,23 +2,27 @@
 #define CPU_H
 
 typedef struct cpu_6510_s {
-  unsigned short pc;
-  unsigned char a;
-  unsigned char x;
-  unsigned char y;
-  unsigned char flags;
-  unsigned char sp;
-  unsigned char mem[0x10000];
-  unsigned int cycles;
+    unsigned short pc;
+    unsigned char a;
+    unsigned char x;
+    unsigned char y;
+    unsigned char flags;
+    unsigned char sp;
+    unsigned char mem[0x10000];
+    unsigned int cycles;
 } CPU_6510;
 
-void init_cpu(CPU_6510 *cpu, unsigned short newpc, unsigned char newa,
-              unsigned char newx, unsigned char newy);
+void init_cpu(CPU_6510      *cpu, 
+              unsigned short newpc, 
+              unsigned char  newa,
+              unsigned char  newx, 
+              unsigned char  newy);
 
-int run_cpu(CPU_6510 *cpu);
+int  run_cpu(CPU_6510 *cpu);
 void dmp_cpu_regs(CPU_6510 *cpu);
+void test_cpu(CPU_6510 *cpu);
 
-// --
+// -- 
 
 #define FN 0x80
 #define FV 0x40

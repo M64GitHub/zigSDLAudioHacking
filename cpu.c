@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "cpu.h"
 
@@ -932,3 +933,32 @@ int run_cpu(CPU_6510 *cpu) {
 }
 
 void setpc(CPU_6510 *cpu, unsigned short newpc) { cpu->pc = newpc; }
+
+void test_cpu(CPU_6510 *cpu) {
+    printf("[DBG] testing cpu\n");
+    //              PC      A     X     Y
+    init_cpu(cpu, 0x0000, 0x10, 0x00, 0x00);
+
+    // -- test ASL
+    memset(cpu->mem, 0x0a, 0x10);
+    run_cpu(cpu);
+    run_cpu(cpu);
+    run_cpu(cpu);
+    run_cpu(cpu);
+    run_cpu(cpu);
+    run_cpu(cpu);
+
+    // -- test ADC:
+    // add 3 to a
+    cpu->mem[0x006] = 0x69;
+    cpu->mem[0x007] = 0x03;
+    run_cpu(cpu);
+    dmp_cpu_regs(cpu);
+
+    // add 0xff -> overflow
+    cpu->mem[0x008] = 0x69;
+    cpu->mem[0x009] = 0xff;
+    run_cpu(cpu);
+    dmp_cpu_regs(cpu);
+}
+

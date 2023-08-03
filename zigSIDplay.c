@@ -5,9 +5,10 @@
  +--------------------------------------------------------------------------+
  |     Supposed to become a SID player utilizing an SDL2 AudioQueue to
  |     output sound. The sound is generated utilizing a virtual C64 cpu
- |     to send register changes to a virtual C64 soundchip (reSID). 
+ |     to send register changes to a virtual C64 soundchip (SID) emulated
+ |     by reSID code. 
  |     First in C (zig compiler drop in replacement), then rewrite          ^
- |     main logic in zig, and use zig build. Then port to SoundIO.          |
+ |     main logic in zig, and use zig build.                                |
 \*==========================================================================*/
 
 #include <stdio.h>
@@ -21,91 +22,67 @@
 #include "zigSIDplay.h"
 
 // -- ARG DEFAULTs, if not 0:
-#define ARG_DEFAULT_BASENOTE 0xB0
+#define ARG_DEFAULT_BASENOTE    0xB0
 
 // -- SDL2 stuff
-#define SAMPLING_FREQ 48000  // 48khz
-#define NUM_CHANNELS 2       // Stereo
-#define BUFFER_SAMPLES 16384 // 64k buffer
+#define SAMPLING_FREQ           48000    // 48khz
+#define NUM_CHANNELS            2        // stereo
+#define SIZE_AUDIO_BUF          16384    // 64k buffer(1S = stereo i16 = 2b)
 
 // --
 
-SID_FILE sf1;
 CPU_6510 cpu1;
-SDL_AudioDeviceID AUDIO_DEV_ID = 0;
+SID_FILE sidfile1;
+
+SDL_AudioDeviceID AUDIO_DEV_ID;
 
 // -- helpers
 
 void init_cmdline_args(CMDLINE_ARGS *args) {
-  memset(args, 0, sizeof(CMDLINE_ARGS));
-  args->basenote = ARG_DEFAULT_BASENOTE;
+    memset(args, 0, sizeof(CMDLINE_ARGS));
+    args->basenote = ARG_DEFAULT_BASENOTE;
 }
 
-int parse_cmdline(CMDLINE_ARGS *args) { return 0; }
-
-void test_cpu(CPU_6510 *cpu) {
-  printf("[DBG] testing cpu\n");
-  //              PC      A     X     Y
-  init_cpu(cpu, 0x0000, 0x10, 0x00, 0x00);
-
-  // -- test ASL
-  memset(cpu->mem, 0x0a, 0x10);
-  run_cpu(cpu);
-  run_cpu(cpu);
-  run_cpu(cpu);
-  run_cpu(cpu);
-  run_cpu(cpu);
-  run_cpu(cpu);
-
-  // -- test ADC:
-  // add 3 to a
-  cpu->mem[0x006] = 0x69;
-  cpu->mem[0x007] = 0x03;
-  run_cpu(cpu);
-  dmp_cpu_regs(cpu);
-
-  // add 0xff -> overflow
-  cpu1.mem[0x008] = 0x69;
-  cpu1.mem[0x009] = 0xff;
-  run_cpu(cpu);
-  dmp_cpu_regs(cpu);
+int parse_cmdline(CMDLINE_ARGS *args) { 
+    return 0; 
 }
 
 // -- AUDIO
 
 int init_sdl_audio() {
-  SDL_AudioSpec audiospec;
+    SDL_AudioSpec audiospec;
 
-  // initialise SDL audio subsystem only
-  if (SDL_Init(SDL_INIT_AUDIO)) {
-    printf("[ERR] initializing SDL_AUDIO subsystem: %s\n", SDL_GetError());
-    return 2;
-  }
+    // initialise SDL audio subsystem only
+    if (SDL_Init(SDL_INIT_AUDIO)) {
+        printf("[ERR] initializing SDL_AUDIO subsystem: %s\n", SDL_GetError());
+        return 2;
+    }
 
-  printf("[OK!] SDL2 audio subsystem initialized\n");
+    printf("[OK!] SDL2 audio subsystem initialized\n");
 
-  // configure audio device struct
-  memset(&audiospec, 0, sizeof(SDL_AudioSpec));
-  audiospec.freq = SAMPLING_FREQ;
-  audiospec.format = AUDIO_S8;
-  audiospec.channels = NUM_CHANNELS;
-  audiospec.samples = BUFFER_SAMPLES;
-  audiospec.userdata = NULL;
-  audiospec.callback = NULL;
+    // configure audio device struct
+    memset(&audiospec, 0, sizeof(SDL_AudioSpec));
 
-  // use new interface, let QueueAudio convert
-  AUDIO_DEV_ID = SDL_OpenAudioDevice(NULL, 0, &audiospec, NULL, 0);
+    audiospec.freq      = SAMPLING_FREQ;
+    audiospec.format    = AUDIO_S8;         // 8 bit
+    audiospec.channels  = NUM_CHANNELS;     // mono  / stereo
+    audiospec.samples   = SIZE_AUDIO_BUF;   // size in samples
+    audiospec.userdata  = NULL;
+    audiospec.callback  = NULL;             // we use SDL_QueueAudio
 
-  if (AUDIO_DEV_ID < 1) {
-    printf("[ERR] initializing audio device: %s", SDL_GetError());
-    return 1;
-  }
-  printf("[OK!] SDL2 audio device opened: ID:%d\n", AUDIO_DEV_ID);
+    // use new interface, let QueueAudio convert
+    AUDIO_DEV_ID = SDL_OpenAudioDevice(NULL, 0, &audiospec, NULL, 0);
 
-  // audio devices default to being paused, so turn off pause
+    if (AUDIO_DEV_ID < 1) {
+        printf("[ERR] initializing audio device: %s", SDL_GetError());
+        return 1;
+    }
+    printf("[OK!] SDL2 audio device opened: ID:%d\n", AUDIO_DEV_ID);
+
+    // audio devices default to being paused, so turn off pause
     SDL_PauseAudioDevice(AUDIO_DEV_ID, 0);
 
-  return 0;
+    return 0;
 }
 
 void test_audio() {
