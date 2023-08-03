@@ -3,11 +3,11 @@
  v 00.0.0-dev                                     ( afk aka Mario Schallner )
                                                                             |
  +--------------------------------------------------------------------------+
- |
- |   supposed to become a SID player utilizing reSID to feed an SDL audio-
- |   system. resid is fed with register-changes to it's sound shap
- |                                                                          ^
- |                                                                          |
+ |     Supposed to become a SID player utilizing an SDL2 AudioQueue to
+ |     output sound. The sound is generated utilizing a virtual C64 cpu
+ |     to send register changes to a virtual C64 soundchip (reSID). 
+ |     First in C (zig compiler drop in replacement), then rewrite          ^
+ |     main logic in zig, and use zig build. Then port to SoundIO.          |
 \*==========================================================================*/
 
 #include <stdio.h>
@@ -128,6 +128,7 @@ void test_audio() {
     for(int i=0; i<3; i++) {
         printf("Queuing audio %d ...\n", i);
         err=SDL_QueueAudio(AUDIO_DEV_ID, testbuf, 48000);
+        if(err) printf("[ERR] initializing audio device: %s", SDL_GetError());
     }
 }
 
