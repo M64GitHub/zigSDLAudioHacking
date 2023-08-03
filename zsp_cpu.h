@@ -1,5 +1,5 @@
-#ifndef CPU_H
-#define CPU_H
+#ifndef ZSP_CPU_H
+#define ZSP_CPU_H
 
 typedef struct cpu_6510_s {
     unsigned short pc;

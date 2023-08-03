@@ -1,5 +1,5 @@
-#ifndef SIDFILE_H
-#define SIDFILE_H
+#ifndef ZSP_SID_MUSIC_FILE_H
+#define ZSP_SID_MUSIC_FILE_H
 
 #include <stdio.h>
 

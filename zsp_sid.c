@@ -1,4 +1,4 @@
-#include "SID.h"
+#include "zsp_sid.h"
 
 CHANNEL chn[3];
 CHANNEL prevchn[3];

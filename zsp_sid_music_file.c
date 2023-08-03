@@ -1,4 +1,4 @@
-#include "sidfile.h"
+#include "zsp_sid_music_file.h"
 
 unsigned char readbyte(FILE *f) {
   unsigned char res;
