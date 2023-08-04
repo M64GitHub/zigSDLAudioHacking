@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "zsp_cpu.h"
+#include "zsp_term.h"
 
 static const int cpucycles_table[] = {
     7, 6, 0, 8, 3, 3, 5, 5, 3, 2, 2, 2, 4, 4, 6, 6, 2, 5, 0, 8, 4, 4, 6, 6,
@@ -34,40 +35,59 @@ void cpu_init(CPU_6510 *cpu,
     cpu->cycles = 0;
 
     cpu->detect_mem_changes = 1 - disable_memchk;
-    if(disable_memchk) printf("[DBG][CPU][INIT] memchk disabled\n");
-    else printf("[DBG][CPU][INIT] memchk ENABLED\n");
+    if(disable_memchk) println_dbg("[CPU][INIT] memchk disabled");
+    else println_dbg("[DBG][CPU][INIT] memchk ENABLED");
 }
 
 void cpu_dmp_regs(CPU_6510 *cpu) {
+    char flags_str[9];
+
+    for(int i=0; i<8; i++) 
+        flags_str[i] = (cpu->flags >> i) & 1  ?  '1' : '0';
+
+    flags_str[8] = 0x00;
+
+    print_dbg("");
     printf(
-    "[DBG][CPU][DMP]  PC: %04x        A:%02x X:%02x Y:%02x     FLAGS: %02x\n",
-    cpu->pc, cpu->a, cpu->x, cpu->y, cpu->flags);
+    "%s[CPU][DMP] PC: %04x | A:%02x X:%02x Y:%02x | F: %s (%02x) | SP: %02x%s\n",
+           TERM_COLOR_LIGHTGRAY,
+            cpu->pc, cpu->a, cpu->x, cpu->y, flags_str, cpu->flags, cpu->sp,
+           TERM_DEFAULT
+           );
 }
 
 void cpu_test(CPU_6510 *cpu) {
-    printf("[DBG] testing cpu\n");
+    println_dbg("testing cpu");
 
     // -- test ASL
     memset(cpu->mem, 0x0a, 0x10);
 
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
+        println_dbg("A changed!");
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
+        println_dbg("A changed!");
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
+        println_dbg("A changed!");
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
+        println_dbg("A changed!");
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
+        println_dbg("A changed!");
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
+        println_dbg("A changed!");
 
     // -- test ADC:
     // add 3 to a
     cpu->mem[0x006] = 0x69;
     cpu->mem[0x007] = 0x03;
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
+        println_inf("A changed!");
     cpu_dmp_regs(cpu);
 
     // add 0xff -> overflow
     cpu->mem[0x008] = 0x69;
     cpu->mem[0x009] = 0xff;
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
+        println_inf("A changed!");
     cpu_dmp_regs(cpu);
 }
 
@@ -98,9 +118,21 @@ int cpu_step(CPU_6510 *cpu) {
   unsigned temp;
 
   unsigned char op = FETCH();
-  printf("[DBG][CPU][STEP] PC: %04x OP: %02x A:%02x X:%02x Y:%02x     FLAGS: "
-         "%02x\n",
-         cpu->pc - 1, op, cpu->a, cpu->x, cpu->y, cpu->flags);
+
+    char flags_str[9];
+
+    for(int i=0; i<8; i++) 
+        flags_str[i] = (cpu->flags >> i) & 1  ?  '1' : '0';
+    flags_str[8] = 0x00;
+
+    print_dbg("");
+    printf(
+    "%s[CPU][STP] PC: %04x | A:%02x X:%02x Y:%02x | F: %s (%02x) | SP: %02x%s\n",
+           TERM_COLOR_LIGHTGRAY,
+            cpu->pc, cpu->a, cpu->x, cpu->y, flags_str, cpu->flags, cpu->sp,
+           TERM_DEFAULT
+           );
+
   cpu->cycles += cpucycles_table[op];
   switch (op) {
   case 0xa7:

@@ -9,7 +9,8 @@ CXX=zig c++
 CFLAGS+=-O3 -Wall
 CXXFLAGS=$(CFLAGS)
 
-$(BINARY): zigSIDplay.o zsp_cpu.o zsp_sid_music_file.o zsp_sdl_audio.o \
+$(BINARY): zigSIDplay.o \
+	zsp_cpu.o zsp_sid_music_file.o zsp_sdl_audio.o zsp_term.o\
 	reSID/envelope.o \
 	reSID/extfilt.o \
 	reSID/filter.o \

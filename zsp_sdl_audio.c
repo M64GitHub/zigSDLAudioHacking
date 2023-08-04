@@ -1,4 +1,5 @@
 #include "zsp_sdl_audio.h"
+#include "zsp_term.h"
 #include <SDL2/SDL.h>
 
 int sdl_audio_init(SDL_AudioDeviceID *id, 
@@ -8,11 +9,12 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
                    int SIZE_AUDIO_BUF) {
     // initialise SDL audio subsystem only
     if (SDL_Init(SDL_INIT_AUDIO)) {
-        printf("[ERR] initializing SDL_AUDIO subsystem: %s\n", SDL_GetError());
+        print_err("initializing SDL_AUDIO subsystem: ");
+        printf("%s", SDL_GetError());
         return 2;
     }
 
-    printf("[OK!] SDL2 audio subsystem initialized\n");
+    println_ok("SDL2 audio subsystem initialized");
 
     // configure audio device struct
     memset(spec, 0, sizeof(SDL_AudioSpec));
@@ -31,7 +33,8 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
         printf("[ERR] initializing audio device: %s", SDL_GetError());
         return 1;
     }
-    printf("[OK!] SDL2 audio device opened: id:%d\n", *id);
+    print_ok("SDL2 audio device opened: id:");
+    printf("%d\n", *id);
 
     // audio devices default to being paused, so turn off pause
     SDL_PauseAudioDevice(*id, 0);
@@ -54,13 +57,14 @@ void audio_test(SDL_AudioDeviceID id) {
         // if(i < freq) printf("f: %f (%d)\n",f, (char)f);
     }
 
-    printf("[DBG] Queuing audio ...\n");
+    println_inf("Queuing audio ...");
     int err;
 
     for(int i=0; i<3; i++) {
-        printf("[DBG] Queuing audio %d ...\n", i);
+        print_dbg("Queuing audio");
+        printf("%s%d ...%s\n", TERM_COLOR_LIGHTGRAY, i, TERM_DEFAULT);
         err=SDL_QueueAudio(id, testbuf, 48000);
-        if(err) printf("[ERR] initializing audio device: %s", SDL_GetError());
+        if(err) printf("[ERR] queuing audio: %s", SDL_GetError());
     }
 }
 

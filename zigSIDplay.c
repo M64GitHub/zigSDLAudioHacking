@@ -18,6 +18,8 @@
 #include <SDL2/SDL.h>
 #include "zsp_sdl_audio.h"
 
+#include "zsp_term.h"
+
 #include "zsp_cpu.h"
 #include "zsp_sid_music_file.h"
 #include "zigSIDplay.h"
@@ -70,7 +72,7 @@ int main(int argc, char **argv) {
     cpu_test(&ZSP_CPU1);
     audio_test(ZSP_AudioDevID);
 
-    printf("[INF] waiting 3 seconds for sound to finish ...\n");
+    println_inf("waiting 3 seconds for sound to finish ...");
     SDL_Delay(3000);
 
     return 0;
