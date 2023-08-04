@@ -1,29 +1,61 @@
 #ifndef ZSP_CPU_H
 #define ZSP_CPU_H
 
+typedef enum {
+    CPU_CHANGE_NONE = 0,
+    CPU_CHANGE      = 1,
+    CPU_CHANGE_REGS = 2,
+    CPU_CHANGE_MEM  = 4,
+    CPU_CHANGE_A    = 8,
+    CPU_CHANGE_X    = 16,
+    CPU_CHANGE_Y    = 32,
+    CPU_CHANGE_SP   = 64,
+    CPU_CHANGE_STACK = 128,
+    CPU_CHANGE_FLAGS = 256
+} CPU_CHANGES;
+
 typedef struct cpu_6510_s {
     // -- regs
     unsigned short pc;
+
     unsigned char a;
     unsigned char x;
     unsigned char y;
+
     unsigned char flags;
     unsigned char sp;
 
     unsigned char mem[0x10000];
 
+    // we double the entries to be able to detect changes
+    unsigned short old_pc;
+    unsigned char old_a;
+    unsigned char old_x;
+    unsigned char old_y;
+    unsigned char old_flags;
+    unsigned char old_sp;
+    unsigned char old_mem[0x10000];
+
     unsigned int cycles;
+
+    unsigned char detect_mem_changes;
 } CPU_6510;
 
 void cpu_init(CPU_6510      *cpu, 
               unsigned short newpc, 
               unsigned char  newa,
               unsigned char  newx, 
-              unsigned char  newy);
+              unsigned char  newy,
+              unsigned char disable_memchk);
 
 int  cpu_step(CPU_6510 *cpu);
+
+// -- dbg related funcs
+
 void cpu_dmp_regs(CPU_6510 *cpu);
 void cpu_test(CPU_6510 *cpu);
+
+CPU_CHANGES cpu_reg_changed(CPU_6510 *cpu);
 
 // -- 
 

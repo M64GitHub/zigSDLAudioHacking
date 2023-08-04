@@ -65,7 +65,8 @@ int main(int argc, char **argv) {
     return 2;
 
     // init
-    cpu_init(&ZSP_CPU1, 0, 0, 0, 0);
+    //                  PC A  X  Y  memchk enabled
+    cpu_init(&ZSP_CPU1, 0, 0, 0, 0, 0);
     cpu_test(&ZSP_CPU1);
     audio_test(ZSP_AudioDevID);
 
@@ -74,3 +75,4 @@ int main(int argc, char **argv) {
 
     return 0;
 }
+

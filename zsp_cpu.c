@@ -21,7 +21,8 @@ void cpu_init(CPU_6510 *cpu,
               unsigned short newpc, 
               unsigned char newa,
               unsigned char newx, 
-              unsigned char newy) {
+              unsigned char newy,
+              unsigned char disable_memchk) {
     cpu->pc = newpc;
 
     cpu->a  = newa;
@@ -31,47 +32,73 @@ void cpu_init(CPU_6510 *cpu,
     cpu->sp = 0xff;
     cpu->flags = 0;
     cpu->cycles = 0;
+
+    cpu->detect_mem_changes = 1 - disable_memchk;
+    if(disable_memchk) printf("[DBG][CPU][INIT] memchk disabled\n");
+    else printf("[DBG][CPU][INIT] memchk ENABLED\n");
 }
 
 void cpu_dmp_regs(CPU_6510 *cpu) {
     printf(
-    "[DBG][CPU][DMP] PC: %04x        A:%02x X:%02x Y:%02x     FLAGS: %02x\n",
+    "[DBG][CPU][DMP]  PC: %04x        A:%02x X:%02x Y:%02x     FLAGS: %02x\n",
     cpu->pc, cpu->a, cpu->x, cpu->y, cpu->flags);
 }
 
 void cpu_test(CPU_6510 *cpu) {
     printf("[DBG] testing cpu\n");
-    //              PC      A     X     Y
-    cpu_init(cpu, 0x0000, 0x10, 0x00, 0x00);
 
     // -- test ASL
     memset(cpu->mem, 0x0a, 0x10);
-    cpu_step(cpu);
-    cpu_step(cpu);
-    cpu_step(cpu);
-    cpu_step(cpu);
-    cpu_step(cpu);
-    cpu_step(cpu);
+
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
 
     // -- test ADC:
     // add 3 to a
     cpu->mem[0x006] = 0x69;
     cpu->mem[0x007] = 0x03;
-    cpu_step(cpu);
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
     cpu_dmp_regs(cpu);
 
     // add 0xff -> overflow
     cpu->mem[0x008] = 0x69;
     cpu->mem[0x009] = 0xff;
-    cpu_step(cpu);
+    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) printf("A changed!\n");
     cpu_dmp_regs(cpu);
+}
+
+CPU_CHANGES cpu_reg_changed(CPU_6510 *cpu) {
+    CPU_CHANGES changed = CPU_CHANGE_NONE;
+
+    if(cpu->a != cpu->old_a) changed |= CPU_CHANGE_REGS | CPU_CHANGE_A;
+    if(cpu->x != cpu->old_x) changed |= CPU_CHANGE_REGS | CPU_CHANGE_X;
+    if(cpu->y != cpu->old_y) changed |= CPU_CHANGE_REGS | CPU_CHANGE_Y;
+
+    if(cpu->flags != cpu->old_flags) changed |= CPU_CHANGE_FLAGS;
+    if(cpu->sp != cpu->old_sp) changed |= CPU_CHANGE_STACK;
+
+    if(!cpu->detect_mem_changes) return changed;
+
+    // check mem for changes
+    for(int i=0; i < 0x10000; i++) {
+        if(cpu->mem[i] != cpu->old_mem[i]) {
+            changed |= CPU_CHANGE_MEM;
+            break;
+        }
+    }
+
+    return changed;
 }
 
 int cpu_step(CPU_6510 *cpu) {
   unsigned temp;
 
   unsigned char op = FETCH();
-  printf("[DBG][CPU][RUN] PC: %04x OP: %02x A:%02x X:%02x Y:%02x     FLAGS: "
+  printf("[DBG][CPU][STEP] PC: %04x OP: %02x A:%02x X:%02x Y:%02x     FLAGS: "
          "%02x\n",
          cpu->pc - 1, op, cpu->a, cpu->x, cpu->y, cpu->flags);
   cpu->cycles += cpucycles_table[op];
@@ -950,19 +977,20 @@ int cpu_step(CPU_6510 *cpu) {
     break;
 
   case 0x00:
-    printf("Error: CPU detected 0x00 instruction at %04X\n", cpu->pc - 1);
-    return 0;
+    printf("[ERR] CPU detected 0x00 instruction at %04X\n", cpu->pc - 1);
+    return 2;
 
   case 0x02:
-    printf("Error: CPU halt at %04X\n", cpu->pc - 1);
-    exit(1);
+    printf("[ERR] CPU halt at %04X\n", cpu->pc - 1);
+    return 2;
     break;
 
   default:
-    printf("Error: Unknown opcode $%02X at $%04X\n", op, cpu->pc - 1);
-    exit(1);
+    printf("[ERR] unknown opcode $%02X at $%04X\n", op, cpu->pc - 1);
+    return 2;
     break;
   }
+
   return 1;
 }
 
