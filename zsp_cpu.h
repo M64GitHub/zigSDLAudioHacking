@@ -2,13 +2,16 @@
 #define ZSP_CPU_H
 
 typedef struct cpu_6510_s {
+    // -- regs
     unsigned short pc;
     unsigned char a;
     unsigned char x;
     unsigned char y;
     unsigned char flags;
     unsigned char sp;
+
     unsigned char mem[0x10000];
+
     unsigned int cycles;
 } CPU_6510;
 

@@ -950,6 +950,7 @@ int run_cpu(CPU_6510 *cpu) {
     break;
 
   case 0x00:
+    printf("Error: CPU detected 0x00 instruction at %04X\n", cpu->pc - 1);
     return 0;
 
   case 0x02:
