@@ -15,15 +15,15 @@ typedef struct cpu_6510_s {
     unsigned int cycles;
 } CPU_6510;
 
-void init_cpu(CPU_6510      *cpu, 
+void cpu_init(CPU_6510      *cpu, 
               unsigned short newpc, 
               unsigned char  newa,
               unsigned char  newx, 
               unsigned char  newy);
 
-int  run_cpu(CPU_6510 *cpu);
-void dmp_cpu_regs(CPU_6510 *cpu);
-void test_cpu(CPU_6510 *cpu);
+int  cpu_step(CPU_6510 *cpu);
+void cpu_dmp_regs(CPU_6510 *cpu);
+void cpu_test(CPU_6510 *cpu);
 
 // -- 
 

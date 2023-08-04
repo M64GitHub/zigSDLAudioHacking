@@ -57,15 +57,17 @@ int main(int argc, char **argv) {
 
     if (parse_cmdline(&args)) return 1;
 
-    if (init_sdl_audio(&ZSP_AudioDevID, 
+    if (sdl_audio_init(&ZSP_AudioDevID, 
                        &ZSP_AudioSpec,
                         SAMPLING_FREQ,
                         NUM_CHANNELS,
                         SIZE_AUDIO_BUF))
     return 2;
 
-    test_cpu(&ZSP_CPU1);
-    test_audio(ZSP_AudioDevID);
+    // init
+    cpu_init(&ZSP_CPU1, 0, 0, 0, 0);
+    cpu_test(&ZSP_CPU1);
+    audio_test(ZSP_AudioDevID);
 
     printf("[INF] waiting 3 seconds for sound to finish ...\n");
     SDL_Delay(3000);

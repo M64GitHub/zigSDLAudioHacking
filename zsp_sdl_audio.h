@@ -3,13 +3,13 @@
 
 #include <SDL2/SDL.h>
 
-int init_sdl_audio(SDL_AudioDeviceID *id, 
+int sdl_audio_init(SDL_AudioDeviceID *id, 
                    SDL_AudioSpec     *spec,
                    int SAMPLING_FREQ,
                    int NUM_CHANNELS,
                    int SIZE_AUDIO_BUF);
 
-void test_audio(SDL_AudioDeviceID id);
+void audio_test(SDL_AudioDeviceID id);
 
 #endif
 

@@ -1,7 +1,7 @@
 #include "zsp_sdl_audio.h"
 #include <SDL2/SDL.h>
 
-int init_sdl_audio(SDL_AudioDeviceID *id, 
+int sdl_audio_init(SDL_AudioDeviceID *id, 
                    SDL_AudioSpec     *spec,
                    int SAMPLING_FREQ,
                    int NUM_CHANNELS,
@@ -40,7 +40,7 @@ int init_sdl_audio(SDL_AudioDeviceID *id,
 }
 
 
-void test_audio(SDL_AudioDeviceID id) {
+void audio_test(SDL_AudioDeviceID id) {
     char testbuf[48000]; // 1 sec
     float f;
     float PI = 3.141592;
