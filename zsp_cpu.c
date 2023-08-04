@@ -43,7 +43,7 @@ void cpu_dmp_regs(CPU_6510 *cpu) {
     char flags_str[9];
 
     for(int i=0; i<8; i++) 
-        flags_str[i] = (cpu->flags >> i) & 1  ?  '1' : '0';
+        flags_str[7-i] = (cpu->flags >> i) & 1  ?  '1' : '0';
 
     flags_str[8] = 0x00;
 
@@ -122,7 +122,7 @@ int cpu_step(CPU_6510 *cpu) {
     char flags_str[9];
 
     for(int i=0; i<8; i++) 
-        flags_str[i] = (cpu->flags >> i) & 1  ?  '1' : '0';
+        flags_str[7-i] = (cpu->flags >> i) & 1  ?  '1' : '0';
     flags_str[8] = 0x00;
 
     print_dbg("");
