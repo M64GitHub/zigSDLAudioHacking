@@ -33,7 +33,7 @@ void cpu_init(CPU_6510 *cpu,
     cpu->cycles = 0;
 }
 
-void dmp_cpu_regs(CPU_6510 *cpu) {
+void cpu_dmp_regs(CPU_6510 *cpu) {
     printf(
     "[DBG][CPU][DMP] PC: %04x        A:%02x X:%02x Y:%02x     FLAGS: %02x\n",
     cpu->pc, cpu->a, cpu->x, cpu->y, cpu->flags);
@@ -58,13 +58,13 @@ void cpu_test(CPU_6510 *cpu) {
     cpu->mem[0x006] = 0x69;
     cpu->mem[0x007] = 0x03;
     cpu_step(cpu);
-    dmp_cpu_regs(cpu);
+    cpu_dmp_regs(cpu);
 
     // add 0xff -> overflow
     cpu->mem[0x008] = 0x69;
     cpu->mem[0x009] = 0xff;
     cpu_step(cpu);
-    dmp_cpu_regs(cpu);
+    cpu_dmp_regs(cpu);
 }
 
 int cpu_step(CPU_6510 *cpu) {
