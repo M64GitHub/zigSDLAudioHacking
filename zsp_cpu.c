@@ -80,7 +80,7 @@ void cpu_test(CPU_6510 *cpu) {
     cpu->mem[0x006] = 0x69;
     cpu->mem[0x007] = 0x03;
     cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
-        println_inf("A changed!");
+        println_dbg("A changed!");
     cpu_dmp_regs(cpu);
 
     // add 0xff -> overflow
