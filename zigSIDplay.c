@@ -81,15 +81,13 @@ void delay(int ms, double pb_width) {
 
     buf[0] = 0x00; 
     for(int i=0; i<=count; i++) {
-        // print_inf("wait ");
-        // printf("%.0f%%", 100.0 - ((double)((count-i))/((double)count)) * 100.0); 
-        // printf("\r"); flush_term(); 
-        // SDL_Delay(200);
-
         print_inf("[WAIT] ");
         double pct = 100.0 - ((double)((count-i))/((double)count)) * 100.0;
 
-        printf("[%3.0f%%] | ", pct); 
+        printf("[%3.0f%%] %s| %s", 
+               pct, 
+               TERM_COLOR_LIGHTGRAY, 
+               TERM_COLOR_LIGHTBLUE); 
         max = pb_width - ((double)((count-i))/((double)count)) * pb_width;
         max = max - 1;
         for(j=0; j < pb_width; j++) {
@@ -98,11 +96,9 @@ void delay(int ms, double pb_width) {
         }
         buf[(int)max] = '>';
         if((int)max == ((int)pb_width-1)) buf[(int)max] = '#';
-        buf[(int)pb_width + 0] = ' ';
-        buf[(int)pb_width + 1] = '|';
-        buf[(int)pb_width + 2 ] = 0x0;
+        buf[(int)pb_width + 0] = 0x00;
 
-        printf("%s", buf);
+        printf("%s%s |%s", buf, TERM_COLOR_LIGHTGRAY, TERM_DEFAULT);
         printf("\r"); flush_term(); 
         SDL_Delay(100);
     }
@@ -135,7 +131,7 @@ int main(int argc, char **argv) {
     cursor_on(); flush_term(); 
 
     printf("\n");
-    println_ok("READY.");
+    println_blu("READY.");
 
     SDL_Delay(300);
 

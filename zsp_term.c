@@ -69,6 +69,10 @@ void println_ok(char *msg) {
     printf("%s[OK!] %s%s\n", TERM_COLOR_LIGHTGREEN, msg, TERM_DEFAULT);
 }
 
+void println_blu(char *msg) {
+    printf("%s[---] %s%s\n", TERM_COLOR_LIGHTBLUE, msg, TERM_DEFAULT);
+}
+
 void cursor_off() {
     printf("%s", TERM_CURSOR_OFF);
 }

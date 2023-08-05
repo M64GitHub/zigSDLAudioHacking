@@ -6,6 +6,8 @@
 #define TERM_COLOR_LIGHTRED     "\x1b[91m"
 #define TERM_COLOR_LIGHTGREEN   "\x1b[92m"
 #define TERM_COLOR_LIGHTYELLOW  "\x1b[93m"
+#define TERM_COLOR_LIGHTBLUE    "\x1b[94m"
+#define TERM_COLOR_LIGHTWHITE   "\x1b[97m"
 
 #define TERM_CURSOR_OFF         "\x1b[?25l"
 #define TERM_CURSOR_ON          "\x1b[?25h"
@@ -14,6 +16,7 @@ void print_inf(char *msg);
 void print_dbg(char *msg);
 void print_ok(char *msg);
 void print_err(char *msg);
+void println_blu(char *msg);
 
 void println_inf(char *msg);
 void println_dbg(char *msg);
