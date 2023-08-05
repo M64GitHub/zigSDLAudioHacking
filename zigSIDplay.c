@@ -62,12 +62,50 @@ void print_header() {
            TERM_DEFAULT
            );
 
+    flush_term();
+
     // printf("%s", zsp_logo120_txt);
     // printf("%s                                              "
     //        "  v00.00, M64%s\n",
     //        TERM_COLOR_LIGHTGRAY,
     //        TERM_DEFAULT
     //        );
+}
+
+void delay(int ms, double pb_width) {
+    println_inf("waiting for sound to finish ...");
+    int count = ms / 100;
+    char buf[256];
+    double max;
+    int j=0;
+
+    buf[0] = 0x00; 
+    for(int i=0; i<=count; i++) {
+        // print_inf("wait ");
+        // printf("%.0f%%", 100.0 - ((double)((count-i))/((double)count)) * 100.0); 
+        // printf("\r"); flush_term(); 
+        // SDL_Delay(200);
+
+        print_inf("[WAIT] ");
+        double pct = 100.0 - ((double)((count-i))/((double)count)) * 100.0;
+
+        printf("[%3.0f%%] | ", pct); 
+        max = pb_width - ((double)((count-i))/((double)count)) * pb_width;
+        max = max - 1;
+        for(j=0; j < pb_width; j++) {
+            if(j < max) buf[j] = '#';
+            else buf[j] = ' ';
+        }
+        buf[(int)max] = '>';
+        if((int)max == ((int)pb_width-1)) buf[(int)max] = '#';
+        buf[(int)pb_width + 0] = ' ';
+        buf[(int)pb_width + 1] = '|';
+        buf[(int)pb_width + 2 ] = 0x0;
+
+        printf("%s", buf);
+        printf("\r"); flush_term(); 
+        SDL_Delay(100);
+    }
 }
 
 // --
@@ -93,14 +131,13 @@ int main(int argc, char **argv) {
     audio_test(ZSP_AudioDevID);
 
     cursor_off(); flush_term();
-    println_inf("waiting for sound to finish ...");
-    for(int i=0; i<3; i++) {
-        print_inf("wait ");
-        printf("%d",3-i);
-        printf("\r"); flush_term(); 
-        SDL_Delay(1000);
-    }
+    delay(2000, 40);
     cursor_on(); flush_term(); 
+
+    printf("\n");
+    println_ok("READY.");
+
+    SDL_Delay(300);
 
     return 0;
 }

@@ -49,18 +49,26 @@ void audio_test(SDL_AudioDeviceID id) {
    
     float ampl = 120.0;
     float freq = 400.0;
-    for(int i=0; i<(48000 / 2); i++){
+    for(int i=0; i<(48000 / 4); i+=4){
         f = ampl * sin((float)i/freq *2*PI);
-        testbuf[i] = f;
-        testbuf[i+1] = f;
-        // if(i < freq) printf("f: %f (%d)\n",f, (char)f);
+        if(f>ampl)           f = ampl;
+        if(f<0) f = 0;
+        testbuf[i+0] = f;
+        testbuf[i+1] = 0;
+        testbuf[i+2] = f;
+        testbuf[i+3] = 0;
     }
+    testbuf[4795] = 0x00;
+    testbuf[4796] = 0x00;
+    testbuf[4797] = 0x00;
+    testbuf[4798] = 0x00;
+    testbuf[4799] = 0x00;
 
     println_inf("Queuing audio ...");
     int err;
-    for(int i=0; i<3; i++) {
+    for(int i=0; i<4; i++) {
         print_dbg("Queuing audio ");
-        printf("%s%d ...%s", TERM_COLOR_LIGHTGRAY, i, TERM_DEFAULT);
+        printf("%s%d ...%s", TERM_COLOR_LIGHTGRAY, i+1, TERM_DEFAULT);
 
         printf("\n");
 
