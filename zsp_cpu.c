@@ -1015,7 +1015,7 @@ int cpu_step(CPU_6510 *cpu) {
 return 1;
 }
 
-void setpc(CPU_6510 *cpu, unsigned short newpc) { 
+void set_pc(CPU_6510 *cpu, unsigned short newpc) { 
     cpu->old_pc = cpu->pc;
     cpu->pc = newpc; 
 }
