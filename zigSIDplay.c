@@ -19,6 +19,7 @@
 #include "zsp_sdl_audio.h"
 
 #include "zsp_term.h"
+#include "zsp_logo.h"
 
 #include "zsp_cpu.h"
 #include "zsp_sid_music_file.h"
@@ -51,9 +52,14 @@ int parse_cmdline(CMDLINE_ARGS *args) {
     return 0; 
 }
 
+void print_header() {
+   printf("%s%", zsp_logo_txt); 
+}
+
 // --
 
 int main(int argc, char **argv) {
+    print_header();
     CMDLINE_ARGS args;
     init_cmdline_args(&args);
 

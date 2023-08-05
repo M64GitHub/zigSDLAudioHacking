@@ -36,7 +36,10 @@ void cpu_init(CPU_6510 *cpu,
 
     cpu->detect_mem_changes = 1 - disable_memchk;
     if(disable_memchk) println_dbg("[CPU][INIT] memchk disabled");
-    else println_dbg("[CPU][INIT] memchk ENABLED");
+    else {
+        print_dbg("[CPU][INIT] memchk ");
+        printf("%senabled\n", TERM_DEFAULT);
+    }
     cpu_dmp_regs(cpu, "INIT");
 }
 

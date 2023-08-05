@@ -23,4 +23,6 @@ typedef struct cmdline_args_s {
 
 void init_cmdline_args(CMDLINE_ARGS *args);
 
+void print_header();
+
 #endif
