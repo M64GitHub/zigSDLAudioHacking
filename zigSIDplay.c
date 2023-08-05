@@ -20,6 +20,7 @@
 
 #include "zsp_term.h"
 #include "zsp_logo.h"
+#include "zsp_logo120.h"
 
 #include "zsp_cpu.h"
 #include "zsp_sid_music_file.h"
@@ -53,9 +54,17 @@ int parse_cmdline(CMDLINE_ARGS *args) {
 }
 
 void print_header() {
-    printf("%s", zsp_logo_txt); 
-    printf("%s                                                            "
-           "   v00.00 M64%s\n",
+
+    // printf("%s", zsp_logo_txt); 
+    // printf("%s                                                            "
+    //        "  v00.00, M64%s\n",
+    //        TERM_COLOR_LIGHTGRAY,
+    //        TERM_DEFAULT
+    //        );
+
+    printf("%s", zsp_logo120_txt);
+    printf("%s                                              "
+           "  v00.00, M64%s\n",
            TERM_COLOR_LIGHTGRAY,
            TERM_DEFAULT
            );
