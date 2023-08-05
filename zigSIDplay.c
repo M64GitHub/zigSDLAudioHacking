@@ -30,7 +30,7 @@
 // -- SDL2 stuff
 #define SAMPLING_FREQ           48000    // 48khz
 #define NUM_CHANNELS            2        // stereo
-#define SIZE_AUDIO_BUF          16384    // 64k buffer(1S = stereo i16 = 2b)
+#define SIZE_AUDIO_BUF          16384    // 64k buffer(1S = stereo i16 = 4b)
 
 // --
 
