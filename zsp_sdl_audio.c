@@ -42,7 +42,6 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
     return 0;
 }
 
-
 void audio_test(SDL_AudioDeviceID id) {
     char testbuf[48000]; // 1 sec
     float f;
