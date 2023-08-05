@@ -1,4 +1,4 @@
-![image](https://github.com/M64GitHub/zigSDLAudioHacking/assets/84202356/3af3933d-290e-4004-bd60-88f3c312495b)
+![image](https://github.com/M64GitHub/zigSDLAudioHacking/assets/84202356/3ea3df52-dcdb-4b28-9374-e227c1407fb0)
 
 
 # zigSDLAudioHacking
