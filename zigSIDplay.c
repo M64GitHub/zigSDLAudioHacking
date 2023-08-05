@@ -72,7 +72,7 @@ int main(int argc, char **argv) {
     cpu_test(&ZSP_CPU1);
     audio_test(ZSP_AudioDevID);
 
-    println_inf("waiting 3 seconds for sound to finish ...");
+    println_inf("waiting for sound to finish ...");
     SDL_Delay(3000);
 
     return 0;
