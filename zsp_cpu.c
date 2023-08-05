@@ -36,25 +36,49 @@ void cpu_init(CPU_6510 *cpu,
 
     cpu->detect_mem_changes = 1 - disable_memchk;
     if(disable_memchk) println_dbg("[CPU][INIT] memchk disabled");
-    else println_dbg("[DBG][CPU][INIT] memchk ENABLED");
+    else println_dbg("[CPU][INIT] memchk ENABLED");
+    cpu_dmp_regs(cpu, "INIT");
 }
 
 void cpu_dmp_regs(CPU_6510 *cpu, char *task) {
     char flags_str[9];
 
+    // for change coloring
+    char color_a[8];
+    char color_x[8];
+    char color_y[8];
+    char color_f[8];
+    char color_sp[8];
+   
+    strcpy(color_a, TERM_COLOR_LIGHTGRAY);
+    strcpy(color_x, TERM_COLOR_LIGHTGRAY);
+    strcpy(color_y, TERM_COLOR_LIGHTGRAY);
+    strcpy(color_f, TERM_COLOR_LIGHTGRAY);
+    strcpy(color_sp, TERM_COLOR_LIGHTGRAY);
+
+    int changes = cpu_reg_changed(cpu);
+    if(changes & CPU_CHANGE_A) strcpy(color_a, TERM_DEFAULT);
+    if(changes & CPU_CHANGE_X) strcpy(color_x, TERM_DEFAULT);
+    if(changes & CPU_CHANGE_Y) strcpy(color_y, TERM_DEFAULT);
+    if(changes & CPU_CHANGE_FLAGS) strcpy(color_f, TERM_DEFAULT);
+    if(changes & CPU_CHANGE_STACK) strcpy(color_sp, TERM_DEFAULT);
+
     for(int i=0; i<8; i++) 
         flags_str[7-i] = (cpu->flags >> i) & 1  ?  '1' : '0';
-
     flags_str[8] = 0x00;
 
     print_dbg("");
     printf(
-    "%s[CPU][%s] PC: %04x | A:%02x X:%02x Y:%02x | F: %s (%02x) | SP: %02x%s\n",
-           TERM_COLOR_LIGHTGRAY,
-           task, 
-            cpu->pc, cpu->a, cpu->x, cpu->y, flags_str, cpu->flags, cpu->sp,
-           TERM_DEFAULT
-           );
+    "%s[CPU][%s] PC: %04x | A:%s%02x%s X:%s%02x%s Y:%s%02x%s | F: %s%s%s (%02x) | SP: %s%02x%s\n",
+        TERM_COLOR_LIGHTGRAY,
+        task, 
+        cpu->pc, 
+        color_a, cpu->a, TERM_COLOR_LIGHTGRAY,
+        color_x, cpu->x, TERM_COLOR_LIGHTGRAY,
+        color_y, cpu->y, TERM_COLOR_LIGHTGRAY, 
+        color_f, flags_str, TERM_COLOR_LIGHTGRAY, cpu->flags, 
+        color_sp, cpu->sp, TERM_COLOR_LIGHTGRAY
+    );
 }
 
 void cpu_test(CPU_6510 *cpu) {
@@ -63,33 +87,23 @@ void cpu_test(CPU_6510 *cpu) {
     // -- test ASL
     memset(cpu->mem, 0x0a, 0x10);
 
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
-        println_dbg("A changed!");
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
-        println_dbg("A changed!");
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
-        println_dbg("A changed!");
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
-        println_dbg("A changed!");
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
-        println_dbg("A changed!");
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
-        println_dbg("A changed!");
+    cpu_step(cpu); 
+    cpu_step(cpu); 
+    cpu_step(cpu);
+    cpu_step(cpu);
+    cpu_step(cpu);
+    cpu_step(cpu);
 
     // -- test ADC:
     // add 3 to a
     cpu->mem[0x006] = 0x69;
     cpu->mem[0x007] = 0x03;
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
-        println_dbg("A changed!");
-    cpu_dmp_regs(cpu, "DMP");
+    cpu_step(cpu); 
 
     // add 0xff -> overflow
     cpu->mem[0x008] = 0x69;
     cpu->mem[0x009] = 0xff;
-    cpu_step(cpu); if(cpu_reg_changed(cpu) & CPU_CHANGE_A) 
-        println_dbg("A changed!");
-    cpu_dmp_regs(cpu, "DMP");
+    cpu_step(cpu);
 }
 
 CPU_CHANGES cpu_reg_changed(CPU_6510 *cpu) {
@@ -118,9 +132,16 @@ CPU_CHANGES cpu_reg_changed(CPU_6510 *cpu) {
 int cpu_step(CPU_6510 *cpu) {
     unsigned temp;
 
-    unsigned char op = FETCH();
+    cpu->old_a = cpu->a;
+    cpu->old_x = cpu->x;
+    cpu->old_y = cpu->y;
 
-    cpu_dmp_regs(cpu, "STP");
+    cpu->old_sp = cpu->sp;
+    cpu->old_flags = cpu->flags;
+
+    cpu->old_pc = cpu->pc;
+
+    unsigned char op = FETCH();
 
     cpu->cycles += cpucycles_table[op];
     switch (op) {
@@ -1010,9 +1031,11 @@ int cpu_step(CPU_6510 *cpu) {
         printf("[ERR] unknown opcode $%02X at $%04X\n", op, cpu->pc - 1);
         return 2;
         break;
-}
+    }
 
-return 1;
+    cpu_dmp_regs(cpu, "STEP");
+
+    return 1;
 }
 
 void set_pc(CPU_6510 *cpu, unsigned short newpc) { 
