@@ -53,7 +53,12 @@ int parse_cmdline(CMDLINE_ARGS *args) {
 }
 
 void print_header() {
-   printf("%s%", zsp_logo_txt); 
+    printf("%s", zsp_logo_txt); 
+    printf("%s                                                            "
+           "   v00.00 M64%s\n",
+           TERM_COLOR_LIGHTGRAY,
+           TERM_DEFAULT
+           );
 }
 
 // --
