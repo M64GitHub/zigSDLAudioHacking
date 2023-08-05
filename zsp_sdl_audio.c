@@ -33,7 +33,7 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
         printf("[ERR] initializing audio device: %s", SDL_GetError());
         return 1;
     }
-    print_ok("SDL2 audio device opened: id:");
+    print_ok("SDL2 audio device opened: id: ");
     printf("%d\n", *id);
 
     // audio devices default to being paused, so turn off pause
@@ -61,7 +61,7 @@ void audio_test(SDL_AudioDeviceID id) {
     int err;
 
     for(int i=0; i<3; i++) {
-        print_dbg("Queuing audio");
+        print_dbg("Queuing audio ");
         printf("%s%d ...%s\n", TERM_COLOR_LIGHTGRAY, i, TERM_DEFAULT);
         err=SDL_QueueAudio(id, testbuf, 48000);
         if(err) printf("[ERR] queuing audio: %s", SDL_GetError());

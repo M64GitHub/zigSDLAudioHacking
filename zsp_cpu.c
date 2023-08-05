@@ -43,7 +43,7 @@ void cpu_init(CPU_6510 *cpu,
 void cpu_dmp_regs(CPU_6510 *cpu, char *task) {
     char flags_str[9];
 
-    // for change coloring
+    // for change highlighting
     char color_a[8];
     char color_x[8];
     char color_y[8];
@@ -69,7 +69,7 @@ void cpu_dmp_regs(CPU_6510 *cpu, char *task) {
 
     print_dbg("");
     printf(
-    "%s[CPU][%s] PC: %04x | A:%s%02x%s X:%s%02x%s Y:%s%02x%s | F: %s%s%s (%02x) | SP: %s%02x%s\n",
+    "%s[CPU][%s] | PC:%04x | A:%s%02x%s X:%s%02x%s Y:%s%02x%s | F: %s%s%s (%02x) | SP: %s%02x%s\n",
         TERM_COLOR_LIGHTGRAY,
         task, 
         cpu->pc, 
@@ -1034,6 +1034,11 @@ int cpu_step(CPU_6510 *cpu) {
     }
 
     cpu_dmp_regs(cpu, "STEP");
+
+    if(cpu->detect_mem_changes) 
+        // copy mem
+        for(int i=0; i < 0x10000; i++) cpu->old_mem[i] = cpu->mem[i];
+    
 
     return 1;
 }
