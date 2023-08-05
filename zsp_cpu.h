@@ -52,7 +52,7 @@ int  cpu_step(CPU_6510 *cpu);
 
 // -- dbg related funcs
 
-void cpu_dmp_regs(CPU_6510 *cpu);
+void cpu_dmp_regs(CPU_6510 *cpu, char *task);
 void cpu_test(CPU_6510 *cpu);
 
 CPU_CHANGES cpu_reg_changed(CPU_6510 *cpu);
