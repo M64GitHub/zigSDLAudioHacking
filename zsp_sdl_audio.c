@@ -58,10 +58,12 @@ void audio_test(SDL_AudioDeviceID id) {
 
     println_inf("Queuing audio ...");
     int err;
-
     for(int i=0; i<3; i++) {
         print_dbg("Queuing audio ");
-        printf("%s%d ...%s\n", TERM_COLOR_LIGHTGRAY, i, TERM_DEFAULT);
+        printf("%s%d ...%s", TERM_COLOR_LIGHTGRAY, i, TERM_DEFAULT);
+
+        printf("\n");
+
         err=SDL_QueueAudio(id, testbuf, 48000);
         if(err) printf("[ERR] queuing audio: %s", SDL_GetError());
     }

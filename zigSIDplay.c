@@ -55,19 +55,19 @@ int parse_cmdline(CMDLINE_ARGS *args) {
 
 void print_header() {
 
-    // printf("%s", zsp_logo_txt); 
-    // printf("%s                                                            "
-    //        "  v00.00, M64%s\n",
-    //        TERM_COLOR_LIGHTGRAY,
-    //        TERM_DEFAULT
-    //        );
-
-    printf("%s", zsp_logo120_txt);
-    printf("%s                                              "
+    printf("%s", zsp_logo_txt); 
+    printf("%s                                                            "
            "  v00.00, M64%s\n",
            TERM_COLOR_LIGHTGRAY,
            TERM_DEFAULT
            );
+
+    // printf("%s", zsp_logo120_txt);
+    // printf("%s                                              "
+    //        "  v00.00, M64%s\n",
+    //        TERM_COLOR_LIGHTGRAY,
+    //        TERM_DEFAULT
+    //        );
 }
 
 // --
@@ -85,15 +85,22 @@ int main(int argc, char **argv) {
                         NUM_CHANNELS,
                         SIZE_AUDIO_BUF))
     return 2;
-
+    setbuf(stdout, NULL);
     // init
     //                  PC      A     X     Y     memchk enabled
     cpu_init(&ZSP_CPU1, 0x0000, 0x10, 0x00, 0x00, 0);
     cpu_test(&ZSP_CPU1);
     audio_test(ZSP_AudioDevID);
 
+    cursor_off(); flush_term();
     println_inf("waiting for sound to finish ...");
-    SDL_Delay(3000);
+    for(int i=0; i<3; i++) {
+        print_inf("wait ");
+        printf("%d",3-i);
+        printf("\r"); flush_term(); 
+        SDL_Delay(1000);
+    }
+    cursor_on(); flush_term(); 
 
     return 0;
 }

@@ -36,7 +36,7 @@
 // -- print
 
 void print_inf(char *msg) {
-    printf("%s[INF] %s\n", TERM_DEFAULT, msg);
+    printf("%s[INF] %s", TERM_DEFAULT, msg);
 }
 
 void print_dbg(char *msg) {
@@ -69,6 +69,17 @@ void println_ok(char *msg) {
     printf("%s[OK!] %s%s\n", TERM_COLOR_LIGHTGREEN, msg, TERM_DEFAULT);
 }
 
+void cursor_off() {
+    printf("%s", TERM_CURSOR_OFF);
+}
+
+void cursor_on() {
+    printf("%s", TERM_CURSOR_ON);
+}
+
+void flush_term() {
+    fflush(stdout);
+}
 
 
 
