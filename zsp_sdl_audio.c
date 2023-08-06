@@ -42,6 +42,8 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
     return 0;
 }
 
+// -- tests, quickhack
+
 char testbuf[48000]; // 1 sec
 void audio_generate_test_snd(float ampl, float freq) {
     float f; // general purpose float
@@ -49,7 +51,7 @@ void audio_generate_test_snd(float ampl, float freq) {
    
     for(int i=0; i<(48000 / 4); i+=4){
         f = ampl * sin((float)i/freq *2*PI);
-        if(f>ampl)           f = ampl;
+        if(f>ampl) f = ampl;
         if(f<0) f = 0;
         testbuf[i+0] = f;
         testbuf[i+1] = f;
@@ -59,11 +61,10 @@ void audio_generate_test_snd(float ampl, float freq) {
 }
 
 void audio_test(SDL_AudioDeviceID id) {
-
     println_inf("queuing audio ...");
     int err;
     for(int i=0; i<4; i++) {
-        print_dbg("generating audio ");
+        print_dbg("generating and qeueueing audio block #");
         audio_generate_test_snd(120, 400 + i * 50);
         printf("%s%d ...%s", TERM_COLOR_LIGHTGRAY, i+1, TERM_DEFAULT);
         printf("\n");
