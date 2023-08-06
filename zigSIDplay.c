@@ -63,45 +63,44 @@ void print_header() {
            );
 
     flush_term();
-
-    // printf("%s", zsp_logo120_txt);
-    // printf("%s                                              "
-    //        "  v00.00, M64%s\n",
-    //        TERM_COLOR_LIGHTGRAY,
-    //        TERM_DEFAULT
-    //        );
 }
 
-void delay(int ms, double pb_width) {
-    println_inf("waiting for sound to finish ...");
-    int count = ms / 100;
+// delay w/ optional progress bar
+void pb_delay(int ms, double pb_width) {
     char buf[256];
-    double max;
-    int j=0;
+    int count = ms / 100;   // 100ms update frequency
+    double current;         // current pct scaled to progressbar width
+                            // (number of "fill chars" ('#')
+    buf[0] = 0x00;          // init buf as empty string
 
-    buf[0] = 0x00; 
+    if(pb_width > 0)        // 0: dont't draw progress bar
+    // print progress_bar
     for(int i=0; i<=count; i++) {
-        print_inf("[WAIT] ");
         double pct = 100.0 - ((double)((count-i))/((double)count)) * 100.0;
 
+        print_inf("[WAIT] ");
         printf("[%3.0f%%] %s| %s", 
                pct, 
                TERM_COLOR_LIGHTGRAY, 
                TERM_COLOR_LIGHTBLUE); 
-        max = pb_width - ((double)((count-i))/((double)count)) * pb_width;
-        max = max - 1;
-        for(j=0; j < pb_width; j++) {
-            if(j < max) buf[j] = '#';
-            else buf[j] = ' ';
+
+        current = pb_width - ((double)((count-i))/((double)count)) * pb_width;
+        current = current - 1;
+
+        // draw buf into progress bar
+        for(int j=0; j < pb_width; j++) {
+            if(j < current) buf[j] = '#';
+            else buf[j] = '-';
         }
-        buf[(int)max] = '>';
-        if((int)max == ((int)pb_width-1)) buf[(int)max] = '#';
+
+        buf[(int)current] = '>';
+        if((int) current == ((int)pb_width-1)) buf[(int)current] = '#';
         buf[(int)pb_width + 0] = 0x00;
 
         printf("%s%s |%s", buf, TERM_COLOR_LIGHTGRAY, TERM_DEFAULT);
         printf("\r"); flush_term(); 
-        SDL_Delay(100);
-    }
+        SDL_Delay(100); // 100ms update frequency
+    } else SDL_Delay(ms);
 }
 
 // --
@@ -126,8 +125,9 @@ int main(int argc, char **argv) {
     cpu_test(&ZSP_CPU1);
     audio_test(ZSP_AudioDevID);
 
+    println_inf("waiting for sound to finish ...");
     cursor_off(); flush_term();
-    delay(2000, 40);
+    pb_delay(2000, 40);
     cursor_on(); flush_term(); 
 
     printf("\n");
