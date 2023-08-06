@@ -54,7 +54,8 @@ int parse_cmdline(CMDLINE_ARGS *args) {
 }
 
 void print_header() {
-
+    
+    setbuf(stdout, NULL); // turn off buffering
     printf("%s", zsp_logo_txt); 
     printf("%s                                                            "
            "  v00.00, M64%s\n",
@@ -73,10 +74,11 @@ void pb_delay(int ms, double pb_width) {
                             // (number of "fill chars" ('#')
     buf[0] = 0x00;          // init buf as empty string
 
+    cursor_off(); flush_term();
     if(pb_width > 0)        // 0: dont't draw progress bar
     // print progress_bar
     for(int i=0; i<=count; i++) {
-        double pct = 100.0 - ((double)((count-i))/((double)count)) * 100.0;
+        double pct = 100.0 - ((count-i)/count) * 100.0;
 
         print_inf("[WAIT] ");
         printf("[%3.0f%%] %s| %s", 
@@ -84,23 +86,29 @@ void pb_delay(int ms, double pb_width) {
                TERM_COLOR_LIGHTGRAY, 
                TERM_COLOR_LIGHTBLUE); 
 
-        current = pb_width - ((double)((count-i))/((double)count)) * pb_width;
+        current = pb_width - (count-(double)i)/count * pb_width;
         current = current - 1;
 
-        // draw buf into progress bar
+        // draw progress bar into buf
         for(int j=0; j < pb_width; j++) {
             if(j < current) buf[j] = '#';
             else buf[j] = '-';
         }
-
         buf[(int)current] = '>';
-        if((int) current == ((int)pb_width-1)) buf[(int)current] = '#';
-        buf[(int)pb_width + 0] = 0x00;
 
-        printf("%s%s |%s", buf, TERM_COLOR_LIGHTGRAY, TERM_DEFAULT);
+        if((int) current == ((int)pb_width-1)) buf[(int)current] = '#';
+        buf[(int)pb_width + 0] = 0x00; // terminate string
+
+        printf("%s%s |%s", 
+               buf, 
+               TERM_COLOR_LIGHTGRAY, 
+               TERM_DEFAULT);
+
         printf("\r"); flush_term(); 
         SDL_Delay(100); // 100ms update frequency
     } else SDL_Delay(ms);
+
+    printf("\n"); cursor_on(); flush_term(); 
 }
 
 // --
@@ -117,8 +125,8 @@ int main(int argc, char **argv) {
                         SAMPLING_FREQ,
                         NUM_CHANNELS,
                         SIZE_AUDIO_BUF))
-    return 2;
-    setbuf(stdout, NULL);
+                        return 2;
+
     // init
     //                  PC      A     X     Y     memchk enabled
     cpu_init(&ZSP_CPU1, 0x0000, 0x10, 0x00, 0x00, 0);
@@ -126,11 +134,8 @@ int main(int argc, char **argv) {
     audio_test(ZSP_AudioDevID);
 
     println_inf("waiting for sound to finish ...");
-    cursor_off(); flush_term();
     pb_delay(2000, 40);
-    cursor_on(); flush_term(); 
 
-    printf("\n");
     println_blu("READY.");
 
     SDL_Delay(300);
