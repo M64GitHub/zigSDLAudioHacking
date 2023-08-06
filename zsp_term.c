@@ -67,7 +67,7 @@ void pb_delay(int ms, double pb_width) {
     if(pb_width > 0)        // 0: dont't draw progress bar
     // print progress_bar
     for(int i=0; i<=count; i++) {
-        double pct = 100.0 - ((count-i)/count) * 100.0;
+        double pct = 100.0 - ((count-(double)i)/count) * 100.0;
 
         print_inf("[WAIT] ");
         printf("[%3.0f%%] %s| %s", 
