@@ -66,51 +66,6 @@ void print_header() {
     flush_term();
 }
 
-// delay w/ optional progress bar
-void pb_delay(int ms, double pb_width) {
-    char buf[256];
-    int count = ms / 100;   // 100ms update frequency
-    double current;         // current pct scaled to progressbar width
-                            // (number of "fill chars" ('#')
-    buf[0] = 0x00;          // init buf as empty string
-
-    cursor_off(); flush_term();
-    if(pb_width > 0)        // 0: dont't draw progress bar
-    // print progress_bar
-    for(int i=0; i<=count; i++) {
-        double pct = 100.0 - ((count-i)/count) * 100.0;
-
-        print_inf("[WAIT] ");
-        printf("[%3.0f%%] %s| %s", 
-               pct, 
-               TERM_COLOR_LIGHTGRAY, 
-               TERM_COLOR_LIGHTBLUE); 
-
-        current = pb_width - (count-(double)i)/count * pb_width;
-        current = current - 1;
-
-        // draw progress bar into buf
-        for(int j=0; j < pb_width; j++) {
-            if(j < current) buf[j] = '#';
-            else buf[j] = '-';
-        }
-        buf[(int)current] = '>';
-
-        if((int) current == ((int)pb_width-1)) buf[(int)current] = '#';
-        buf[(int)pb_width + 0] = 0x00; // terminate string
-
-        printf("%s%s |%s", 
-               buf, 
-               TERM_COLOR_LIGHTGRAY, 
-               TERM_DEFAULT);
-
-        printf("\r"); flush_term(); 
-        SDL_Delay(100); // 100ms update frequency
-    } else SDL_Delay(ms);
-
-    printf("\n"); cursor_on(); flush_term(); 
-}
-
 // --
 
 int main(int argc, char **argv) {

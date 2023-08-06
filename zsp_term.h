@@ -23,6 +23,8 @@ void println_dbg(char *msg);
 void println_ok(char *msg);
 void println_err(char *msg);
 
+void pb_delay(int ms, double pb_width);
+
 void cursor_on();
 void cursor_off();
 void flush_term();
