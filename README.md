@@ -17,7 +17,7 @@ Audio-related code is intentionally prepared / abstracted to allow easy replacem
 Once I can output a .sid file to the audio-device, and probably show a siddump-like output I will start the conversion.
 
 
-### status
+#### status
 Currently the following parts work:
  - cpu in general
  - reSID code integration
