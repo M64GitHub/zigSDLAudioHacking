@@ -25,6 +25,6 @@ Currently the following parts work:
  - terminal handling w/ colors and animations
    
 ## credits
- - the cpu code groundwork was done by Lasse Oorni and Stein Pedersen in their amazing little (but powerful)[`siddump`](https://github.com/cadaver/siddump)-utility. I have integrated the core code of it, and rewrite / extend it heavily. 
+ - the cpu code groundwork was done by Lasse Oorni and Stein Pedersen in their little (but amazingly powerful and elegant) [`siddump`](https://github.com/cadaver/siddump)-utility. I have integrated the core code of it, and rewrite / extend it heavily. 
  - the SID (*S*ound *I*nterface *D*evice of the Commodore 64) emulation is done by [`reSID`](https://github.com/libsdl-org/SDL). I wrap around my own code to extend it's capabilities and connect it to the SDL-audio-subsystem.
  - [SDL](https://github.com/libsdl-org/SDL) for audio-output
