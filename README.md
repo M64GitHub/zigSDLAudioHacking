@@ -11,3 +11,11 @@ zigSIDplay is the actual `.sid` music file player I am currently working on. Whe
 I won't go into a full implementation for the C version: like implementing a clean and full blown arguments parser, logging infrastructure, terminal handling, tests, and features.  
 This shall all be done in the final .zig version. C-code is mainly for testing the player concept, SDL interactions, in a language I am familiar with - before I start the conversion to zig.  
 Once I can output a .sid file to the audio-device, and probably show a siddump-like output I will start the conversion.
+
+### status
+Currently the following parts work:
+ - cpu in general
+ - reSID code integration
+ - SDL2 audio output
+ - terminal handling w/ colors and animations
+   
