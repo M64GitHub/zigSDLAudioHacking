@@ -42,8 +42,9 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
     return 0;
 }
 
+char testbuf[48000]; // 1 sec
+
 void audio_test(SDL_AudioDeviceID id) {
-    char testbuf[48000]; // 1 sec
     float f;
     float PI = 3.141592;
    
@@ -54,15 +55,10 @@ void audio_test(SDL_AudioDeviceID id) {
         if(f>ampl)           f = ampl;
         if(f<0) f = 0;
         testbuf[i+0] = f;
-        testbuf[i+1] = 0;
-        testbuf[i+2] = f;
+        testbuf[i+1] = f;
+        testbuf[i+2] = 0;
         testbuf[i+3] = 0;
     }
-    testbuf[4795] = 0x00;
-    testbuf[4796] = 0x00;
-    testbuf[4797] = 0x00;
-    testbuf[4798] = 0x00;
-    testbuf[4799] = 0x00;
 
     println_inf("Queuing audio ...");
     int err;
