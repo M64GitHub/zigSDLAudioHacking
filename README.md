@@ -22,6 +22,7 @@ Currently the following parts work:
  - cpu in general
  - reSID code integration
  - SDL2 audio output
+ - build with zig as C/C++ compiler
  - terminal handling w/ colors and animations
 ![image](https://github.com/M64GitHub/zigSDLAudioHacking/assets/84202356/2636d53f-ba9c-4d53-8941-aa52a0f1c834)
 
