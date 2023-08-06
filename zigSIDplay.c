@@ -54,7 +54,6 @@ int parse_cmdline(CMDLINE_ARGS *args) {
 }
 
 void print_header() {
-    
     setbuf(stdout, NULL); // turn off buffering
     printf("%s", zsp_logo_txt); 
     printf("%s                                                            "
@@ -62,7 +61,6 @@ void print_header() {
            TERM_COLOR_LIGHTGRAY,
            TERM_DEFAULT
            );
-
     flush_term();
 }
 
@@ -71,6 +69,7 @@ void print_header() {
 int main(int argc, char **argv) {
     print_header();
     CMDLINE_ARGS args;
+
     init_cmdline_args(&args);
 
     if (parse_cmdline(&args)) return 1;
@@ -92,9 +91,6 @@ int main(int argc, char **argv) {
     pb_delay(2000, 40);
 
     println_blu("READY.");
-
-    SDL_Delay(300);
-
     return 0;
 }
 
