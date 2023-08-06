@@ -13,7 +13,7 @@ This shall all be done in the final .zig version. C-code is mainly for:
  - testing the player concept, SDL interactions, in a language I am familiar with - before I start the conversion to zig.
  - creating an open component for the MOS 6510 CPU, so I can utilize it's features afterwards directly by importing and binding it to the zig code, and also re-use it in potential future C/C++ as well as zig projects.
 
-Audio-related code is intentionally prepared / abstracted to allow easy replacement of `SDL2` by another audio-library (ie [`SoundIO`](https://github.com/cadaver/siddump)).  
+Audio-related code is intentionally prepared / abstracted to allow easy replacement of `SDL2` by another audio-library (ie [`libsoundio`](https://github.com/andrewrk/libsoundio)).  
 Once I can output a .sid file to the audio-device, and probably show a siddump-like output I will start the conversion.
 
 
@@ -28,5 +28,5 @@ Currently the following parts work:
 
 ## credits
  - the cpu code groundwork was done by Lasse Oorni and Stein Pedersen in their little (but amazingly powerful and elegant) [`siddump`](https://github.com/cadaver/siddump)-utility. I have integrated the core code of it, and rewrite / extend it heavily. 
- - the SID (*S*ound *I*nterface *D*evice of the Commodore 64) emulation is done by [`reSID`](https://github.com/libsdl-org/SDL). I wrap around my own code to extend it's capabilities and connect it to the SDL-audio-subsystem.
+ - the SID (*S*ound *I*nterface *D*evice of the Commodore 64) emulation is done by [`reSID`](https://github.com/daglem/reSID). I wrap around my own code to extend it's capabilities and connect it to the SDL-audio-subsystem.
  - [SDL](https://github.com/libsdl-org/SDL) for platform independent audio-output.
