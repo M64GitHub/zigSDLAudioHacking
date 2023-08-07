@@ -38,7 +38,7 @@
 // --
 
 CPU_6510 ZSP_CPU1;
-// SID_FILE ZSP_SIDFile1;
+SID_FILE ZSP_SIDFile1;
 SDLreSID ZSP_RESID1;
 //
 SDL_AudioDeviceID   ZSP_AudioDevID;

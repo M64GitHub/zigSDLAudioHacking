@@ -4,8 +4,8 @@
 # -------------------------------------------------------------------------- #
 
 BINARY=zigSIDplay
-CC=zig c++
-CXX=zig c++
+# CC=zig c++
+# CXX=zig c++
 
 CFLAGS+=-O3 -Wall
 CXXFLAGS=$(CFLAGS)
@@ -14,6 +14,7 @@ $(BINARY): zigSIDplay.o \
 	zsp_cpu.o \
 	zsp_sdl_audio.o  \
 	zsp_term.o\
+	zsp_sid_music_file.o \
 	zsp_sid.o \
 	zsp_SDLreSID.o 
 
