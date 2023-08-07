@@ -12,17 +12,14 @@
 #include <string.h>
 
 #include <SDL2/SDL.h>
+
 #include "zigSIDplay.h"
 #include "zsp_logo.h"
-
-
 #include "zsp_term.h"
 #include "zsp_sdl_audio.h"
 #include "zsp_cpu.h"
 #include "zsp_sid_music_file.h"
-//
 #include "zsp_SDLreSID.h"
-
 
 // -- arg defaults if not 0:
 
