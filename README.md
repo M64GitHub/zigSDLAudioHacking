@@ -23,7 +23,9 @@ Currently the following parts work:
  - SDL2 audio output
  - build with zig as C/C++ compiler
  - terminal handling w/ colors and animations
-![image](https://github.com/M64GitHub/zigSDLAudioHacking/assets/84202356/2636d53f-ba9c-4d53-8941-aa52a0f1c834)
+ - ![image](https://github.com/M64GitHub/zigSDLAudioHacking/assets/84202356/f43b6620-5a62-46ee-b94f-73d549b98e30)
+
+
 
 ## credits
  - the cpu code groundwork was done by Lasse Öörni and Stein Pedersen in their little (but amazingly powerful and elegant) [`siddump`](https://github.com/cadaver/siddump)-utility. I have integrated the core code of it, and rewrite / extend it heavily. 
