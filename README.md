@@ -8,7 +8,7 @@ zigSIDplay is the actual `.sid` music file player I am currently working on. Whe
 ![ZigSID - page 2](https://github.com/M64GitHub/zigSDLAudioHacking/assets/84202356/ca6cbd89-623d-40e6-9c62-2e3c9456f6e6)
 
 #### notes
-I won't go into a full implementation for the C version: like implementing a clean and full blown .sid file- and arguments-parser, logging infrastructure, terminal handling, tests, and features.  
+I do not plan a full implementation for the C version: like implementing a clean and full blown .sid file- and arguments-parser, logging infrastructure, terminal handling, tests, and features.  
 This shall all be done in the final .zig version. C-code is mainly for: 
  - testing the player concept, SDL interactions, in a language I am familiar with - before I start the conversion to zig.
  - creating an open component for the MOS 6510 CPU, so I can utilize it's features afterwards directly by importing and binding it to the zig code, and also re-use it in potential future C/C++ as well as zig projects.
