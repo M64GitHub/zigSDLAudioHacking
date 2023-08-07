@@ -25,7 +25,7 @@
 
 
 // -- arg defaults if not 0:
-//
+
 #define ARG_DEFAULT_BASENOTE    0xB0
 
 // --  
@@ -39,7 +39,7 @@
 CPU_6510 ZSP_CPU1;
 SID_FILE ZSP_SIDFile1;
 SDLreSID ZSP_RESID1;
-//
+
 SDL_AudioDeviceID   ZSP_AudioDevID;
 SDL_AudioSpec       ZSP_AudioSpec;
   
