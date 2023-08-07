@@ -80,8 +80,8 @@ int main(int argc, char **argv) {
                         SAMPLING_FREQ,
                         NUM_CHANNELS,
                         SIZE_AUDIO_BUF))
-                        return 2;
 
+                        return 2;
     // init
     //                  PC      A     X     Y     memchk 
     //                                            enabled
@@ -90,10 +90,10 @@ int main(int argc, char **argv) {
     audio_test(ZSP_AudioDevID);
 
     println_inf("waiting for sound to finish ...");
-    //       2s    40 chars progressbar
-    pb_delay(2200, 40);
-
+    //       2.2s  40 chars progressbar
+    pb_delay(2300, 40);
     println_blu("READY.");
+
     return 0;
 }
 
