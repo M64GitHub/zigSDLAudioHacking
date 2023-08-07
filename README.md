@@ -4,8 +4,8 @@ hacking playground to try out the zig compiler, SDL audio, combinations of C/C++
 
 ## zigSIDplay
 zigSIDplay is the actual `.sid` music file player I am currently working on. When I reach a usable status with zig build, it will get it's own repository ...  
+![image](https://github.com/M64GitHub/zigSDLAudioHacking/assets/84202356/60e0d05f-5468-46cf-8b58-25943b2c1ae3)
 
-![ZigSID - page 2](https://github.com/M64GitHub/zigSDLAudioHacking/assets/84202356/ca6cbd89-623d-40e6-9c62-2e3c9456f6e6)
 
 #### notes
 I do not plan a full implementation for the C/C++ version: like implementing a clean and full blown .sid file- and arguments-parser, logging infrastructure, terminal handling, tests, and features.  
