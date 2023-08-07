@@ -2,10 +2,9 @@
 // zigSIDplay, 2023, M64 
 // v00.0.0-dev
 // --------------------------------------------------------------------------
-// Aimed to become a SID player utilizing an SDL2 AudioQueue to
-// output sound. The sound is generated utilizing a virtual C64 cpu
-// to send register changes to a virtual C64 soundchip (SID) emulated
-// by reSID code. 
+// Aimed to become a SID player, using SDL2 to output audio.  The sound is 
+// generated utilizing a virtual C64 cpu to send register changes to a 
+// virtual C64 soundchip (SID, emulated by reSID code). 
 // ==========================================================================
 
 #include <stdio.h>
