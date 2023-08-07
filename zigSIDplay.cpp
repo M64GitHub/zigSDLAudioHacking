@@ -70,15 +70,16 @@ int main(int argc, char **argv) {
     print_header();
 
     init_cmdline_args(&args);
-    if (parse_cmdline(&args)) return 1;
+    if (parse_cmdline(&args)) 
+        return 1;
     
     if (sdl_audio_init(&ZSP_AudioDevID, 
                        &ZSP_AudioSpec,
                         SAMPLING_FREQ,
                         NUM_CHANNELS,
-                        SIZE_AUDIO_BUF))
+                        SIZE_AUDIO_BUF)) 
+        return 2;
 
-                        return 2;
     // init
     //                  PC      A     X     Y     memchk 
     //                                            enabled
