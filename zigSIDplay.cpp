@@ -87,7 +87,7 @@ int main(int argc, char **argv) {
     audio_test(ZSP_AudioDevID);
 
     println_inf("waiting for sound to finish ...");
-    //       2.2s  40 chars progressbar
+    //       2.3s  40 chars progressbar
     pb_delay(2300, 40);
     println_blu("READY.");
 
