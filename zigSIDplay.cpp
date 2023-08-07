@@ -27,9 +27,11 @@
 
 // --  
 
-#define SAMPLING_FREQ           48000    // 48khz
+#define SAMPLING_FREQ           44100    // 44.1 kHz
 #define NUM_CHANNELS            2        // stereo
-#define SIZE_AUDIO_BUF          16384    // 64k buffer(1S = stereo i16 = 4b)
+#define SIZE_AUDIO_BUF_SAMPLES  1024     // in samples 4k buffer
+                                         // we will go with 16bit ->
+                                         // (1sf = stereo i16 = 4b)
 
 // --
 
@@ -77,7 +79,7 @@ int main(int argc, char **argv) {
                        &ZSP_AudioSpec,
                         SAMPLING_FREQ,
                         NUM_CHANNELS,
-                        SIZE_AUDIO_BUF)) 
+                        SIZE_AUDIO_BUF_SAMPLES)) 
         return 2;
 
     // init
@@ -88,8 +90,8 @@ int main(int argc, char **argv) {
     audio_test(ZSP_AudioDevID);
 
     println_inf("waiting for sound to finish ...");
-    //       2.3s  40 chars progressbar
-    pb_delay(2300, 40);
+    //       3.3s  40 chars progressbar
+    pb_delay(3500, 40);
     println_blu("READY.");
 
     return 0;

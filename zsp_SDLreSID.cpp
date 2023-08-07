@@ -17,7 +17,8 @@ void SDLreSID::begin(void)
 	playing = true;
 }
 
-void SDLreSID::setSampleParameters(float clockfreq, float samplerate) {
+void SDLreSID::setSampleParameters(float clockfreq, float samplerate) 
+{
 	sid.set_sampling_parameters(clockfreq, SAMPLE_FAST, samplerate); 
 	csdelta = round((float)clockfreq / ((float)samplerate / AUDIO_BLOCK_SAMPLES));
 }
@@ -32,7 +33,8 @@ void SDLreSID::stop(void)
 	playing = false;	
 }
 
-void SDLreSID::update(void) {
+void SDLreSID::update(void) 
+{
 	char *block;
 
 	// only update if we're playing

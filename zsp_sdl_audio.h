@@ -7,9 +7,9 @@ extern "C" {
 
 int sdl_audio_init(SDL_AudioDeviceID *id, 
                    SDL_AudioSpec     *spec,
-                   int SAMPLING_FREQ,
-                   int NUM_CHANNELS,
-                   int SIZE_AUDIO_BUF);
+                   int sampling_freq,
+                   int num_channels,
+                   int size_audiobuf);
 
 void audio_test(SDL_AudioDeviceID id);
 
