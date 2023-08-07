@@ -10,21 +10,22 @@
  |     First in C (zig compiler drop in replacement), then rewrite          ^
  |     main logic in zig, and use zig build.                                |
 \*==========================================================================*/
+#include "zigSIDplay.h"
+#include "zsp_logo.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include <SDL2/SDL.h>
-#include "zsp_sdl_audio.h"
 
 #include "zsp_term.h"
-#include "zsp_logo.h"
-#include "zsp_logo120.h"
-
+#include "zsp_sdl_audio.h"
 #include "zsp_cpu.h"
 #include "zsp_sid_music_file.h"
-#include "zigSIDplay.h"
+//
+#include "zsp_SDLreSID.h"
+
 
 // -- ARG DEFAULTs, if not 0:
 #define ARG_DEFAULT_BASENOTE    0xB0
@@ -37,11 +38,12 @@
 // --
 
 CPU_6510 ZSP_CPU1;
-SID_FILE ZSP_SIDFile1;
-
+// SID_FILE ZSP_SIDFile1;
+SDLreSID ZSP_RESID1;
+//
 SDL_AudioDeviceID   ZSP_AudioDevID;
 SDL_AudioSpec       ZSP_AudioSpec;
-
+//
 // -- helpers
 
 void init_cmdline_args(CMDLINE_ARGS *args) {
@@ -71,9 +73,9 @@ int main(int argc, char **argv) {
     CMDLINE_ARGS args;
 
     init_cmdline_args(&args);
-
+    
     if (parse_cmdline(&args)) return 1;
-
+    
     if (sdl_audio_init(&ZSP_AudioDevID, 
                        &ZSP_AudioSpec,
                         SAMPLING_FREQ,

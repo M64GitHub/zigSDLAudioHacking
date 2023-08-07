@@ -1,3 +1,7 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef ZSP_CPU_H
 #define ZSP_CPU_H
 
@@ -314,3 +318,9 @@ CPU_CHANGES cpu_reg_changed(CPU_6510 *cpu);
   }
 
 #endif
+
+
+#ifdef __cplusplus
+}
+#endif
+

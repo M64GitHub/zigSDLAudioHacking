@@ -1,3 +1,7 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef ZSP_TERM_H
 #define ZSP_TERM_H
 
@@ -29,5 +33,9 @@ void cursor_on();
 void cursor_off();
 void flush_term();
 
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 

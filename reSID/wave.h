@@ -121,10 +121,10 @@ protected:
   // static reg8 wave6581_PS_[];
   // static reg8 wave6581_PST[];
 
-  static reg8 wave8580__ST[];
-  static reg8 wave8580_P_T[];
-  static reg8 wave8580_PS_[];
-  static reg8 wave8580_PST[];
+  // static reg8 wave8580__ST[];
+  // static reg8 wave8580_P_T[];
+  // static reg8 wave8580_PS_[];
+  // static reg8 wave8580_PST[];
 
   const reg8* wave__ST;
   const reg8* wave_P_T;

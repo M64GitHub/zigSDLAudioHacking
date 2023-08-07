@@ -1,6 +1,8 @@
 #ifndef ZSP_SDL_AUDIO_H
 #define ZSP_SDL_AUDIO_H
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include <SDL2/SDL.h>
 
 int sdl_audio_init(SDL_AudioDeviceID *id, 
@@ -12,4 +14,6 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
 void audio_test(SDL_AudioDeviceID id);
 
 #endif
-
+#ifdef __cplusplus
+}
+#endif

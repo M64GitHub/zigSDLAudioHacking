@@ -1,3 +1,4 @@
+
 #include "zsp_term.h"
 #include <stdio.h>
 #include <SDL2/SDL.h>
@@ -50,7 +51,8 @@ void cursor_on() {
     printf("%s", TERM_CURSOR_ON);
 }
 
-void flush_term() {
+void flush_term() 
+{
     fflush(stdout);
 }
 
@@ -99,7 +101,5 @@ void pb_delay(int ms, double pb_width) {
 
     printf("\n"); cursor_on(); flush_term(); 
 }
-
-
 
 

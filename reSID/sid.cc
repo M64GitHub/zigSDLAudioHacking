@@ -19,7 +19,6 @@
 
 #include "sid.h"
 #include <math.h>
-#include <AudioStream.h>
 RESID_NAMESPACE_START
 
 // Resampling constants.
@@ -49,7 +48,7 @@ SID::SID()
   voice[1].set_sync_source(&voice[0]);
   voice[2].set_sync_source(&voice[1]);
 
-  set_sampling_parameters(985248, SAMPLE_FAST, AUDIO_SAMPLE_RATE_EXACT);  
+  set_sampling_parameters(985248, SAMPLE_FAST, 48000);  
 
   bus_value = 0;
   bus_value_ttl = 0;
@@ -126,18 +125,15 @@ void SID::input(int sample)
 int SID::output()
 {
   const int range = 1 << 16;
-  //const int half = range >> 1;
+  const int half = range >> 1;
   int sample = extfilt.output()/((4095*255 >> 7)*3*15*2/range);
 	
-	asm ("ssat %0, #16, %1" : "=r" (sample) : "r" (sample));
-	/*
   if (sample >= half) {
     return half - 1;
   }
   if (sample < -half) {
     return -half;
   }
-	*/
   return sample;
 }
 

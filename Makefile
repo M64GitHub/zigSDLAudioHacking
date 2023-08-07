@@ -4,24 +4,18 @@
 # -------------------------------------------------------------------------- #
 
 BINARY=zigSIDplay
-CC=zig cc
+CC=zig c++
 CXX=zig c++
+
 CFLAGS+=-O3 -Wall
 CXXFLAGS=$(CFLAGS)
 
 $(BINARY): zigSIDplay.o \
-	zsp_cpu.o zsp_sid_music_file.o zsp_sdl_audio.o zsp_term.o\
-	reSID/envelope.o \
-	reSID/extfilt.o \
-	reSID/filter.o \
-	reSID/pot.o \
-	reSID/version.o \
-	reSID/voice.o \
-	reSID/wave8580__ST.o \
-	reSID/wave8580_P_T.o \
-	reSID/wave8580_PS_.o \
-	reSID/wave8580_PST.o \
-	reSID/wave.o
+	zsp_cpu.o \
+	zsp_sdl_audio.o  \
+	zsp_term.o\
+	zsp_sid.o \
+	zsp_SDLreSID.o 
 
 	$(CXX) -o $@ $^ -lm -lSDL2 
 

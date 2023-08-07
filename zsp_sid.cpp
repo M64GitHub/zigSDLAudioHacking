@@ -15,14 +15,3 @@
 #include "reSID/wave.cc"
 #include "reSID/sid.cc"
 
-// --
-
-CHANNEL chn[3];
-CHANNEL prevchn[3];
-CHANNEL prevchn2[3];
-FILTER filt;
-FILTER prevfilt;
-
-// --
-
-int sid_init() { return 0; }

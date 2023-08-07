@@ -110,7 +110,7 @@ void cpu_test(CPU_6510 *cpu) {
 }
 
 CPU_CHANGES cpu_reg_changed(CPU_6510 *cpu) {
-    CPU_CHANGES changed = CPU_CHANGE_NONE;
+    int changed = CPU_CHANGE_NONE;
 
     if(cpu->a != cpu->old_a) changed |= CPU_CHANGE_REGS | CPU_CHANGE_A;
     if(cpu->x != cpu->old_x) changed |= CPU_CHANGE_REGS | CPU_CHANGE_X;
@@ -119,7 +119,7 @@ CPU_CHANGES cpu_reg_changed(CPU_6510 *cpu) {
     if(cpu->flags != cpu->old_flags) changed |= CPU_CHANGE_FLAGS;
     if(cpu->sp != cpu->old_sp) changed |= CPU_CHANGE_STACK;
 
-    if(!cpu->detect_mem_changes) return changed;
+    if(!cpu->detect_mem_changes) return (CPU_CHANGES) changed;
 
     // check mem for changes
     for(int i=0; i < 0x10000; i++) {
@@ -129,7 +129,7 @@ CPU_CHANGES cpu_reg_changed(CPU_6510 *cpu) {
         }
     }
 
-    return changed;
+    return (CPU_CHANGES) changed;
 }
 
 int cpu_step(CPU_6510 *cpu) {
