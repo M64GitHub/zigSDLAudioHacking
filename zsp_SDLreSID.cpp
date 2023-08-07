@@ -18,8 +18,8 @@ void SDLreSID::begin(void)
 }
 
 void SDLreSID::setSampleParameters(float clockfreq, float samplerate) {
-	// sid.set_sampling_parameters(clockfreq, SAMPLE_FAST, samplerate); 
-	// csdelta = round((float)clockfreq / ((float)samplerate / AUDIO_BLOCK_SAMPLES));
+	sid.set_sampling_parameters(clockfreq, SAMPLE_FAST, samplerate); 
+	csdelta = round((float)clockfreq / ((float)samplerate / AUDIO_BLOCK_SAMPLES));
 }
 
 void SDLreSID::reset(void)
@@ -43,9 +43,8 @@ void SDLreSID::update(void) {
 	// if (block == NULL) return;
 		
 	//cycle_count delta_t = CLOCKFREQ / (SAMPLERATE / AUDIO_BLOCK_SAMPLES);
-	                                              // enable this!  
-                                                  // cycle_count delta_t = csdelta;
-                                                  //	sidptr->clock(delta_t, (short int*)block, AUDIO_BLOCK_SAMPLES);
+    cycle_count delta_t = csdelta;
+    sidptr->clock(delta_t, (short int*)block, AUDIO_BLOCK_SAMPLES);
 
 	// transmit(block);
 	// release(block);

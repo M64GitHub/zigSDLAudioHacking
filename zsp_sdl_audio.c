@@ -8,7 +8,7 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
                    int NUM_CHANNELS,
                    int SIZE_AUDIO_BUF) {
     // initialise SDL audio subsystem only
-    if (SDL_Init(SDL_INIT_AUDIO)) {
+    if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_TIMER)) {
         print_err("initializing SDL_AUDIO subsystem: ");
         printf("%s", SDL_GetError());
         return 2;
@@ -38,6 +38,7 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
 
     // audio devices default to being paused, so turn off pause
     SDL_PauseAudioDevice(*id, 0);
+    SDL_Delay(050); //  
 
     return 0;
 }

@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 
+void term_init() {
+    setbuf(stdout, NULL); // turn off buffering
+}
+
 // -- print
 
 void print_inf(char *msg) {

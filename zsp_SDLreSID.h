@@ -16,7 +16,7 @@ public:
 	void stop(void);
 	inline bool isPlaying(void) { return playing; }	
 private:
-	// cycle_count csdelta;
+	cycle_count csdelta;
 	volatile bool playing;
 	virtual void update(void);	
 	SID  sid;

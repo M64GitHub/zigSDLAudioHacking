@@ -1,15 +1,12 @@
-/*--------------------------------------------------------------------------+
- | zigSIDplay                                                     2023, M64 |
- v 00.0.0-dev                                     ( afk aka Mario Schallner )
-                                                                            |
- +--------------------------------------------------------------------------+
- |     Aimed to become a SID player utilizing an SDL2 AudioQueue to
- |     output sound. The sound is generated utilizing a virtual C64 cpu
- |     to send register changes to a virtual C64 soundchip (SID) emulated
- |     by reSID code. 
- |     First in C (zig compiler drop in replacement), then rewrite          ^
- |     main logic in zig, and use zig build.                                |
-\*==========================================================================*/
+// --------------------------------------------------------------------------
+// zigSIDplay, 2023, M64 
+// v00.0.0-dev
+// --------------------------------------------------------------------------
+// Aimed to become a SID player utilizing an SDL2 AudioQueue to
+// output sound. The sound is generated utilizing a virtual C64 cpu
+// to send register changes to a virtual C64 soundchip (SID) emulated
+// by reSID code. 
+// ==========================================================================
 #include "zigSIDplay.h"
 #include "zsp_logo.h"
 
@@ -27,10 +24,12 @@
 #include "zsp_SDLreSID.h"
 
 
-// -- ARG DEFAULTs, if not 0:
+// -- arg defaults if not 0:
+//
 #define ARG_DEFAULT_BASENOTE    0xB0
 
-// -- SDL2 stuff
+// --  
+
 #define SAMPLING_FREQ           48000    // 48khz
 #define NUM_CHANNELS            2        // stereo
 #define SIZE_AUDIO_BUF          16384    // 64k buffer(1S = stereo i16 = 4b)
@@ -43,7 +42,7 @@ SDLreSID ZSP_RESID1;
 //
 SDL_AudioDeviceID   ZSP_AudioDevID;
 SDL_AudioSpec       ZSP_AudioSpec;
-//
+  
 // -- helpers
 
 void init_cmdline_args(CMDLINE_ARGS *args) {
@@ -56,7 +55,6 @@ int parse_cmdline(CMDLINE_ARGS *args) {
 }
 
 void print_header() {
-    setbuf(stdout, NULL); // turn off buffering
     printf("%s", zsp_logo_txt); 
     printf("%s                                                            "
            "  v00.00, M64%s\n",
@@ -69,11 +67,12 @@ void print_header() {
 // --
 
 int main(int argc, char **argv) {
-    print_header();
     CMDLINE_ARGS args;
 
+    term_init();
+    print_header();
+
     init_cmdline_args(&args);
-    
     if (parse_cmdline(&args)) return 1;
     
     if (sdl_audio_init(&ZSP_AudioDevID, 
@@ -84,13 +83,15 @@ int main(int argc, char **argv) {
                         return 2;
 
     // init
-    //                  PC      A     X     Y     memchk enabled
+    //                  PC      A     X     Y     memchk 
+    //                                            enabled
     cpu_init(&ZSP_CPU1, 0x0000, 0x10, 0x00, 0x00, 0);
     cpu_test(&ZSP_CPU1);
     audio_test(ZSP_AudioDevID);
 
     println_inf("waiting for sound to finish ...");
-    pb_delay(2000, 40);
+    //       2s    40 chars progressbar
+    pb_delay(2200, 40);
 
     println_blu("READY.");
     return 0;

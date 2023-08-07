@@ -16,6 +16,8 @@ extern "C" {
 #define TERM_CURSOR_OFF         "\x1b[?25l"
 #define TERM_CURSOR_ON          "\x1b[?25h"
 
+void term_init();
+
 void print_inf(char *msg);
 void print_dbg(char *msg);
 void print_ok(char *msg);
