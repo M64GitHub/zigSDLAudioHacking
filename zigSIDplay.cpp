@@ -7,6 +7,7 @@
 // to send register changes to a virtual C64 soundchip (SID) emulated
 // by reSID code. 
 // ==========================================================================
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
