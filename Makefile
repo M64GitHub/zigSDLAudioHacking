@@ -4,8 +4,8 @@
 # -------------------------------------------------------------------------- #
 
 BINARY=zigSIDplay
-# CC=zig c++
-# CXX=zig c++
+CC=zig c++
+CXX=zig c++
 
 CFLAGS+=-O3 -Wall
 CXXFLAGS=$(CFLAGS)
