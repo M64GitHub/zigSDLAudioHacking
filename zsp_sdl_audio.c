@@ -12,11 +12,11 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
     // initialise SDL audio subsystem only
     if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_TIMER)) {
         print_err("initializing SDL_AUDIO subsystem: ");
-        printf("%s", SDL_GetError());
+        printf("%s\n", SDL_GetError());
         return 2;
     }
 
-    println_ok("SDL2 audio subsystem initialized");
+    println_ok("[AUDIO] SDL2 audio subsystem initialized");
 
     // configure audio device struct
     SDL_AudioSpec spec_in;
@@ -37,12 +37,16 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
         printf("[ERR] initializing audio device: %s", SDL_GetError());
         return 1;
     }
-    print_ok("SDL2 audio device opened: id: ");
-    printf("%d, bufsize_s: %d, bufsize_b: %d, freq: %d\n", 
-           *id,
+    print_ok("[AUDIO] SDL2 audio device opened: id: ");
+    printf("%s%d%s\n", TERM_COLOR_LIGHTWHITE, *id, TERM_DEFAULT);
+    
+    print_dbg("[AUDIO] audio spec: ");
+    printf("%sbufsize_s: %d, bufsize_b: %d, freq: %d%s\n", 
+           TERM_COLOR_LIGHTGRAY,
            spec->samples,
            spec->size,
-           spec->freq);
+           spec->freq,
+           TERM_DEFAULT);
 
     // audio devices default to being paused, so turn off pause
     SDL_PauseAudioDevice(*id, 0);
