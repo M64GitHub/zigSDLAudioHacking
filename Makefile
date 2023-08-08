@@ -16,7 +16,7 @@ $(BINARY): zigSIDplay.o \
 	zsp_term.o\
 	zsp_sidfile.o \
 	zsp_sid.o \
-	zsp_SDLreSID.o 
+	zsp_sdl_resid.o 
 
 	$(CXX) -o $@ $^ -lm -lSDL2 
 

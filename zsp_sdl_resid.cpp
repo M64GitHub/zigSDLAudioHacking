@@ -1,4 +1,4 @@
-#include "zsp_SDLreSID.h"
+#include "zsp_sdl_resid.h"
 
 #define SAMPLERATE 48000
 #define CLOCKFREQ 985248

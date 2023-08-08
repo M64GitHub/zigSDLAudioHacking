@@ -19,7 +19,7 @@
 #include "zsp_sdl_audio.h"
 #include "zsp_cpu.h"
 #include "zsp_sidfile.h"
-#include "zsp_SDLreSID.h"
+#include "zsp_sdl_resid.h"
 
 // -- arg defaults if not 0:
 
