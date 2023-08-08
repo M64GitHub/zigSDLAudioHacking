@@ -18,7 +18,7 @@
 #include "zsp_term.h"
 #include "zsp_sdl_audio.h"
 #include "zsp_cpu.h"
-#include "zsp_sid_music_file.h"
+#include "zsp_sidfile.h"
 #include "zsp_SDLreSID.h"
 
 // -- arg defaults if not 0:
@@ -41,6 +41,9 @@ SDLreSID ZSP_RESID1;
 
 SDL_AudioDeviceID   ZSP_AudioDevID;
 SDL_AudioSpec       ZSP_AudioSpec;
+
+SDL_TimerID ZSP_TimerID_CPU;
+SDL_TimerID ZSP_TimerID_AUDIO;
   
 // -- helpers
 
@@ -75,6 +78,12 @@ int main(int argc, char **argv) {
     if (parse_cmdline(&args)) 
         return 1;
     
+    // init
+    //                  PC      A     X     Y     memchk 
+    //                                            enabled
+    cpu_init(&ZSP_CPU1, 0x0000, 0x10, 0x00, 0x00, 0);
+    cpu_test(&ZSP_CPU1);
+
     if (sdl_audio_init(&ZSP_AudioDevID, 
                        &ZSP_AudioSpec,
                         SAMPLING_FREQ,
@@ -82,16 +91,13 @@ int main(int argc, char **argv) {
                         SIZE_AUDIO_BUF_SAMPLES)) 
         return 2;
 
-    // init
-    //                  PC      A     X     Y     memchk 
-    //                                            enabled
-    cpu_init(&ZSP_CPU1, 0x0000, 0x10, 0x00, 0x00, 0);
-    cpu_test(&ZSP_CPU1);
     audio_test(ZSP_AudioDevID);
-
     println_inf("waiting for sound to finish ...");
     //       4.4s  40 chars progressbar
     pb_delay(4400, 40);
+
+
+    SDL_Quit();
     println_blu("READY.");
 
     return 0;

@@ -14,7 +14,7 @@ $(BINARY): zigSIDplay.o \
 	zsp_cpu.o \
 	zsp_sdl_audio.o  \
 	zsp_term.o\
-	zsp_sid_music_file.o \
+	zsp_sidfile.o \
 	zsp_sid.o \
 	zsp_SDLreSID.o 
 

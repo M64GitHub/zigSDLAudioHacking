@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 
 #include "testsound_raw.h"
+char testbuf[44100 * 4 * 2]; // 4 sec, 1b, stereo
 
 int sdl_audio_init(SDL_AudioDeviceID *id, 
                    SDL_AudioSpec     *spec,
@@ -10,7 +11,7 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
                    int num_channels,
                    int size_audiobuf) {
     // initialise SDL audio subsystem only
-    if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_TIMER)) {
+    if (SDL_Init(SDL_INIT_AUDIO)) {
         print_err("initializing SDL_AUDIO subsystem: ");
         printf("%s\n", SDL_GetError());
         return 2;
@@ -57,44 +58,10 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
 
 // -- tests, quickhack
 
-char testbuf[44100 * 4 * 2]; // 4 sec, 1b, stereo
-unsigned int testbuf_idx = 0;
-void audio_generate_test_snd(float ampl, float freq) {
-    float f; // general purpose float
-    float PI = 3.141592;
-   
-    float t = 0;
-    for(int i=0; i<(44100); i+=2){
-        // f = ...
-
-        // clipping
-        if(f>ampl) f = ampl;
-        if(f<(ampl * -1.0)) f = ampl * -1.0;
-
-        testbuf[testbuf_idx + i+0] = f;
-        testbuf[testbuf_idx + i+1] = f;
-        // testbuf[i+2] = 0;
-        // testbuf[i+3] = 0;
-        testbuf_idx+=2;
-    }
-}
-
 void audio_test(SDL_AudioDeviceID id) {
     println_inf("queuing audio ...");
     int err;
 
-    // clear buffer
-    for(int i=0; i<48000;i++) testbuf[i] = 0;
-
-    testbuf_idx = 0;
-    // for(int i=0; i<4; i++) {
-    //     print_dbg("generating audio block #");
-    //     // audio_generate_test_snd(60, 400 + i * 50);
-    //     printf("%s%d ...%s", TERM_COLOR_LIGHTGRAY, i+1, TERM_DEFAULT);
-    //     printf("\n");
-    // }
-    // printf("testbuf_idx: %d\n", testbuf_idx);
-    // queueing
     println_inf("queuing audio buf with slices of test audio ...");
     // err=SDL_QueueAudio(id, testbuf, 79196);
     err=SDL_QueueAudio(id, TEST_raw, 79196 / 2);

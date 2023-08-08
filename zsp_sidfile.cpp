@@ -1,4 +1,4 @@
-#include "zsp_sid_music_file.h"
+#include "zsp_sidfile.h"
 
 // tracker style note strings, corresponding to frequencies below
 const char *notename[] = {
