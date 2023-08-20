@@ -1,7 +1,7 @@
 ![Selection_439](https://github.com/M64GitHub/zigSDLAudioHacking/assets/84202356/ec96f9b3-2a13-46a8-9247-795f7389b329)
 # zigSDLAudioHacking
 hacking playground to try out the zig compiler, SDL audio, combinations of C/C++ code and zig. Planning a SID debugger / ".sid" music file player, and various related tools from scratch. 
-The goal is to have handy commandline tools available, which would be great to have to assisting me in the audio creation creative work. Ways for inspection on various levels: the C64 cpu, SID registers, work with "editor files" (`.swm`, `.swi`) and so on.
+The goal is to have handy commandline tools available, which would be great to have to assist me in the audio creation creative work. Ways for inspection on various levels: the C64 cpu, SID registers, work with "editor files" (`.swm`, `.swi`) and so on.
 First parts in C/C++, then rewrite as necessary in zig and use zig build.
 
 ## zigsidplay / siddbg
