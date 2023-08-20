@@ -9,7 +9,7 @@ First parts in C/C++, then rewrite as necessary in zig and use zig build from th
 
 `siddbg` shall become an advanced `.sid` music file player, that allows for displaying / visualizing details of what's going on in the player - routine - so: typical cpu debugger, and new, yet to come SID 'debug' features - like: register display / change on the fly, change filter, etc
 
-`swmdbg` shall become a `.swm`, `.swi` file visualizer / dumper, probably editor and maybe even player for the commandline.
+`swmdbg` shall become a (SID-Wizard) `.swm`, `.swi` file visualizer / dumper, probably editor and maybe even player for the commandline.
 
 #### notes
 C/C++-code is mainly for: 
