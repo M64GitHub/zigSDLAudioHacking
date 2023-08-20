@@ -16,7 +16,7 @@ C/C++-code is mainly for:
  - testing the player concept, SDL interactions, in a language I am familiar with - before I start the zig adventure ...
  - creating an open component for the MOS 6510 CPU, so I can utilize it's features afterwards directly by importing and binding it to the zig code, and also re-use it in potential future C/C++ as well as zig projects.
 
-Audio-related code allows easy replacement of `SDL2` by another audio-library (ie [`libsoundio`](https://github.com/andrewrk/libsoundio)).  
+Audio-related code shall allow for an easy replacement of the `SDL2` libs by other audio-libraries (ie [`libsoundio`](https://github.com/andrewrk/libsoundio)).  
 
 #### status
 Currently the following parts work:
