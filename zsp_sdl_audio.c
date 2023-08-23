@@ -12,6 +12,14 @@ static void audio_callback(void *userdata, uint8_t *stream, int len) {
 
     memset(stream, 0, len);
 
+    if(wav_pos + len >= TEST_raw_len)  {
+        PLAYING = 0;
+        return; // TODO: do this properly
+    }
+
+    memcpy(stream, TEST_raw + wav_pos, len); 
+
+    wav_pos += len;
 }
 
 int sdl_audio_init(SDL_AudioDeviceID *id, 
@@ -63,6 +71,11 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
     SDL_Delay(050); //  
 
     return 0;
+}
+
+void sdl_audio_play() {
+    // start playback
+    PLAYING = 1;
 }
 
 

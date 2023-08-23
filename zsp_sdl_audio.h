@@ -13,6 +13,8 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
                    int num_channels,
                    int size_audiobuf);
 
+void sdl_audio_play();
+
 #endif
 #ifdef __cplusplus
 }
