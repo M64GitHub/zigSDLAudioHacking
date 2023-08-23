@@ -4,6 +4,11 @@
 
 #include "testsound_raw.h"
 
+static void audio_callback(void *qq, uint8_t * stream, int len) 
+{
+
+}
+
 int sdl_audio_init(SDL_AudioDeviceID *id, 
                    SDL_AudioSpec     *spec,
                    int sampling_freq,
@@ -23,14 +28,12 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
     memset(spec, 0, sizeof(SDL_AudioSpec));
 
     spec_in.freq      = sampling_freq;
-    spec_in.format    = AUDIO_S8;         // 8 bit
-    spec_in.channels  = num_channels;     // mono  / stereo
-    spec_in.samples   = size_audiobuf;   // size in samples
+    spec_in.format    = AUDIO_S8;       // 8 bit
+    spec_in.channels  = num_channels;   // mono  / stereo
+    spec_in.samples   = size_audiobuf;  // size in samples
     spec_in.userdata  = NULL;
-    spec_in.callback  = NULL;             // we use SDL_QueueAudio
+    spec_in.callback  = NULL;           // we use SDL_QueueAudio
 
-    // use new interface, let QueueAudio convert
-    // *id = SDL_OpenAudioDevice(NULL, 0, spec, NULL, 0);
     *id = SDL_OpenAudioDevice(NULL, 0, &spec_in, spec, 0);
 
     if (*id < 1) {
@@ -55,39 +58,4 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
     return 0;
 }
 
-// -- tests, quickhack
-
-void audio_test(SDL_AudioDeviceID id) {
-    println_inf("queuing audio ...");
-    int err;
-
-    println_inf("queuing audio buf with slices of test audio ...");
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 2);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 4);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 8);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 8);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 8);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 8);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 16);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 16);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 16);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 16);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 16);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 16);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 16);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 16);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 32);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 32);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 32);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 32);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 32);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 32);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 32);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 32);
-    err=SDL_QueueAudio(id, TEST_raw, 79196 / 8);
-    err=SDL_QueueAudio(id, TEST_raw, 79196);
-    err=SDL_QueueAudio(id, TEST_raw, 79196);
-    err=SDL_QueueAudio(id, TEST_raw, 79196);
-    if(err) printf("[ERR] queuing audio: %s", SDL_GetError());
-}
 

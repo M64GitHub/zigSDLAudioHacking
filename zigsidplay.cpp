@@ -12,7 +12,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "zigSIDplay.h"
+#include "zigsidplay.h"
 #include "zsp_logo.h"
 #include "zsp_term.h"
 #include "zsp_sdl_audio.h"
@@ -90,7 +90,7 @@ int main(int argc, char **argv) {
     // audio_test(ZSP_AudioDevID); // uses audio queueing
     println_inf("waiting for sound to finish ...");
     //       4.4s  40 chars progressbar
-    // pb_delay(4400, 40);
+    pb_delay(4400, 40);
 
     SDL_Quit();
     println_blu("READY.");

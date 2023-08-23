@@ -3,14 +3,14 @@
 #                                                  (afk aka Mario Schallner) #
 # -------------------------------------------------------------------------- #
 
-BINARY=zigSIDplay
+BINARY=zigsidplay
 CC=zig c++
 CXX=zig c++
 
 CFLAGS+=-O3 -Wall
 CXXFLAGS=$(CFLAGS)
 
-$(BINARY): zigSIDplay.o \
+$(BINARY): zigsidplay.o \
 	zsp_cpu.o \
 	zsp_sdl_audio.o  \
 	zsp_term.o\

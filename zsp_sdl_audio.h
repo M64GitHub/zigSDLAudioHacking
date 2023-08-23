@@ -11,14 +11,6 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
                    int num_channels,
                    int size_audiobuf);
 
-void audio_test(SDL_AudioDeviceID id);
-
-
-static void audio_callback(UNUSED void *qq, uint8_t * stream, int len)
-{
-
-}
-
 #endif
 #ifdef __cplusplus
 }
