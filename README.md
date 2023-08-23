@@ -48,3 +48,4 @@ Currently the following parts work:
  - the current cpu code groundwork was done by Lasse Öörni and Stein Pedersen in their little (but amazingly powerful and elegant) [`siddump`](https://github.com/cadaver/siddump)-utility. I have integrated some core code of it, and extended it heavily. 
  - the SID (*S*ound *I*nterface *D*evice of the Commodore 64) emulation is done by [`reSID`](https://github.com/daglem/reSID). I wrap around my own code to extend it's capabilities and connect it to the SDL-audio-subsystem.
  - [SDL](https://github.com/libsdl-org/SDL) for platform independent audio-output.
+

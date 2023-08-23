@@ -1,8 +1,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#ifndef ZSP_SID_MUSIC_FILE_H
-#define ZSP_SID_MUSIC_FILE_H
+#ifndef ZSP_SIDFILE_H
+#define ZSP_SIDFILE_H
 
 #include <stdio.h>
 

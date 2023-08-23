@@ -1,12 +1,13 @@
-#include "zsp_SDLreSID.h"
+#include "zsp_sdl_resid.h"
 
-#define SAMPLERATE 48000
+#define SAMPLERATE 44100
 #define CLOCKFREQ 985248
 
 // incredibly small buf!!! TODO: CHANGEME !! M64
-#define AUDIO_BLOCK_SAMPLES 32 
+#define AUDIO_BLOCK_SAMPLES  32
 
 SDLreSID::SDLreSID(void) {
+
 }
 
 void SDLreSID::begin(void)
@@ -25,7 +26,7 @@ void SDLreSID::setSampleParameters(float clockfreq, float samplerate)
 
 void SDLreSID::reset(void)
 {
-	// sid.reset();
+	sid.reset();
 }
 
 void SDLreSID::stop(void)
@@ -35,7 +36,7 @@ void SDLreSID::stop(void)
 
 void SDLreSID::update(void) 
 {
-	char *block;
+	char *block = 0;
 
 	// only update if we're playing
 	if (!playing) return;
