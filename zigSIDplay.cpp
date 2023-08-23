@@ -41,9 +41,6 @@ SDLreSID ZSP_RESID1;
 SDL_AudioDeviceID   ZSP_AudioDevID;
 SDL_AudioSpec       ZSP_AudioSpec;
 
-SDL_TimerID ZSP_TimerID_CPU;
-SDL_TimerID ZSP_TimerID_AUDIO;
-  
 // -- helpers
 
 void init_cmdline_args(CMDLINE_ARGS *args) {
@@ -90,11 +87,10 @@ int main(int argc, char **argv) {
                         SIZE_AUDIO_BUF_SAMPLES)) 
         return 2;
 
-    audio_test(ZSP_AudioDevID);
+    // audio_test(ZSP_AudioDevID); // uses audio queueing
     println_inf("waiting for sound to finish ...");
     //       4.4s  40 chars progressbar
-    pb_delay(4400, 40);
-
+    // pb_delay(4400, 40);
 
     SDL_Quit();
     println_blu("READY.");

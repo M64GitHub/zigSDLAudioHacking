@@ -3,7 +3,6 @@
 #include <SDL2/SDL.h>
 
 #include "testsound_raw.h"
-char testbuf[44100 * 4 * 2]; // 4 sec, 1b, stereo
 
 int sdl_audio_init(SDL_AudioDeviceID *id, 
                    SDL_AudioSpec     *spec,
@@ -63,7 +62,6 @@ void audio_test(SDL_AudioDeviceID id) {
     int err;
 
     println_inf("queuing audio buf with slices of test audio ...");
-    // err=SDL_QueueAudio(id, testbuf, 79196);
     err=SDL_QueueAudio(id, TEST_raw, 79196 / 2);
     err=SDL_QueueAudio(id, TEST_raw, 79196 / 4);
     err=SDL_QueueAudio(id, TEST_raw, 79196 / 8);
