@@ -3,9 +3,14 @@
 #include <SDL2/SDL.h>
 
 #include "testsound_raw.h"
+unsigned int wav_pos = 0;
 
-static void audio_callback(void *qq, uint8_t * stream, int len) 
-{
+int PLAYING = 0;
+
+static void audio_callback(void *userdata, uint8_t *stream, int len) {
+    if(!PLAYING) return;
+
+    memset(stream, 0, len);
 
 }
 
@@ -14,6 +19,8 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
                    int sampling_freq,
                    int num_channels,
                    int size_audiobuf) {
+    wav_pos = 0;
+
     // initialise SDL audio subsystem only
     if (SDL_Init(SDL_INIT_AUDIO)) {
         print_err("initializing SDL_AUDIO subsystem: ");
@@ -32,7 +39,7 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
     spec_in.channels  = num_channels;   // mono  / stereo
     spec_in.samples   = size_audiobuf;  // size in samples
     spec_in.userdata  = NULL;
-    spec_in.callback  = NULL;           // we use SDL_QueueAudio
+    spec_in.callback  = audio_callback;
 
     *id = SDL_OpenAudioDevice(NULL, 0, &spec_in, spec, 0);
 

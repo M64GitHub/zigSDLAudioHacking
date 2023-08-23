@@ -5,6 +5,8 @@ extern "C" {
 #endif
 #include <SDL2/SDL.h>
 
+extern int PLAYING;
+
 int sdl_audio_init(SDL_AudioDeviceID *id, 
                    SDL_AudioSpec     *spec,
                    int sampling_freq,

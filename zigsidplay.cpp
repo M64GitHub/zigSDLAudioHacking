@@ -87,6 +87,9 @@ int main(int argc, char **argv) {
                         SIZE_AUDIO_BUF_SAMPLES)) 
         return 2;
 
+    // start playback
+    PLAYING = 1;
+
     // audio_test(ZSP_AudioDevID); // uses audio queueing
     println_inf("waiting for sound to finish ...");
     //       4.4s  40 chars progressbar
