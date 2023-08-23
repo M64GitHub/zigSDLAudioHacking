@@ -7,6 +7,7 @@
 #define AUDIO_BLOCK_SAMPLES  32
 
 SDLreSID::SDLreSID(void) {
+
 }
 
 void SDLreSID::begin(void)
