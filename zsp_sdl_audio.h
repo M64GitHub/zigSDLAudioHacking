@@ -3,6 +3,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 #include <SDL2/SDL.h>
 
 extern int PL_PLAYING;
