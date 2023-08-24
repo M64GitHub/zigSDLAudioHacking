@@ -37,7 +37,7 @@ typedef struct cpu_6510_s {
     unsigned char old_x;
     unsigned char old_y;
     unsigned char old_flags;
-    unsigned char old_sp;
+    unsigned short old_sp;
     unsigned char old_mem[0x10000];
 
     unsigned int cycles;
