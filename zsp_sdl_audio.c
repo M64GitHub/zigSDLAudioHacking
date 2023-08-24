@@ -9,9 +9,9 @@ int PL_SAMPLES_TOTAL = 0;
 int PL_SAMPLES_CURRENT = 0;
 
 static void audio_callback(void *userdata, uint8_t *stream, int len) {
-    if(!PL_PLAYING) return;
-
     memset(stream, 0, len);
+
+    if(!PL_PLAYING) return;
 
     if(PL_SAMPLES_CURRENT + len >= PL_SAMPLES_TOTAL)  {
         PL_PLAYING = 0;
