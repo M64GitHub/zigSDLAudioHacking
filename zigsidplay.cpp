@@ -90,7 +90,6 @@ int main(int argc, char **argv) {
 
     println_inf("starting playback");
     sdl_audio_play();
-
     println_inf("waiting for sound to finish ...");
     cursor_off(); flush_term();
     while(PL_PLAYING) {
@@ -99,7 +98,7 @@ int main(int argc, char **argv) {
     }
     progressbar(PL_SAMPLES_TOTAL, PL_SAMPLES_CURRENT, 40);
     printf("\n"); cursor_on(); flush_term(); 
-
+    
     SDL_Quit();
     println_blu("READY.");
 
