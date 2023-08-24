@@ -5,12 +5,11 @@
 // generated utilizing a virtual C64 cpu to send register changes to a 
 // virtual C64 soundchip (SID, emulated by reSID code). 
 // ==========================================================================
+#include <SDL2/SDL.h>
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <SDL2/SDL.h>
 
 #include "zigsidplay.h"
 #include "zsp_logo.h"

@@ -1,7 +1,7 @@
+#include <SDL2/SDL.h>
+#include <stdio.h>
 
 #include "zsp_term.h"
-#include <stdio.h>
-#include <SDL2/SDL.h>
 
 void term_init() {
     setbuf(stdout, NULL); // turn off buffering

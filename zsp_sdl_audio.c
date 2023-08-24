@@ -1,6 +1,7 @@
+#include <SDL2/SDL.h>
+
 #include "zsp_sdl_audio.h"
 #include "zsp_term.h"
-#include <SDL2/SDL.h>
 
 #include "testsound_raw.h"
 
