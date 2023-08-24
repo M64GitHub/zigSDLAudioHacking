@@ -1,5 +1,6 @@
 #ifndef ZSP_SDL_AUDIO_H
 #define ZSP_SDL_AUDIO_H
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -21,4 +22,5 @@ void sdl_audio_play();
 #ifdef __cplusplus
 }
 #endif
+
 #endif

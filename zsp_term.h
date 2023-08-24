@@ -1,9 +1,9 @@
+#ifndef ZSP_TERM_H
+#define ZSP_TERM_H
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#ifndef ZSP_TERM_H
-#define ZSP_TERM_H
 
 #define TERM_DEFAULT            "\x1b[0m"
 #define TERM_COLOR_LIGHTGRAY    "\x1b[90m"
@@ -36,9 +36,9 @@ void cursor_on();
 void cursor_off();
 void flush_term();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif
 

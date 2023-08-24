@@ -1,8 +1,9 @@
+#ifndef ZIGSIDPLAY_H
+#define ZIGSIDPLAY_H
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-#ifndef ZIGSIDPLAY_H
-#define ZIGSIDPLAY_H
 
 #include <stdio.h>
 
@@ -30,9 +31,9 @@ void print_header();
 // 4567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
 //       |         |         |         |         |         |         |         |         |         |
 //       10        20        30        40        50        60        70        80        90      100
-#endif
-
-
 #ifdef __cplusplus
 }
 #endif
+
+#endif
+

@@ -1,9 +1,10 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #ifndef ZSP_CPU_H
 #define ZSP_CPU_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef enum {
     CPU_CHANGE_NONE = 0,
@@ -317,10 +318,9 @@ CPU_CHANGES cpu_reg_changed(CPU_6510 *cpu);
       cpu->flags &= ~FZ;                                                       \
   }
 
-#endif
-
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif
 
