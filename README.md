@@ -25,7 +25,9 @@ Currently the following parts work:
  - SDL2 audio output
  - build with zig as C/C++ compiler
  - terminal handling w/ colors and animations
-![zigSIDplayout2](https://github.com/M64GitHub/zigSDLAudioHacking/assets/84202356/4f1bf430-00ba-45e5-afc8-84f76ba98814)
+![zigSIDplayout3](https://github.com/M64GitHub/zigSDLAudioHacking/assets/84202356/debdd5d3-4cf6-45de-b39b-a34182afcf31)
+
+
 #### plans
  - work out the final siddbg concept:
  - rewrite the cpu-emulator in C++
