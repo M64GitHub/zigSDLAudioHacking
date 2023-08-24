@@ -88,6 +88,7 @@ int main(int argc, char **argv) {
 
     println_inf("starting playback");
     sdl_audio_play();
+
     println_inf("waiting for sound to finish ...");
     cursor_off(); flush_term();
     while(PL_PLAYING) {
