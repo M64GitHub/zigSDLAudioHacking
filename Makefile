@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------- #
-# zigsidplay                                                       2023, M64 #
-#                                                  (afk aka Mario Schallner) #
+#  zigsidplay - commandline sid music file player                  2023, M64 # 
+#                                                  <m64.overdrive@gmail.com> #
 # -------------------------------------------------------------------------- #
 
 BINARY=zigsidplay
