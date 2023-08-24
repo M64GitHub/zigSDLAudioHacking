@@ -27,9 +27,8 @@
 
 #define SAMPLING_FREQ           44100    // 44.1 kHz
 #define NUM_CHANNELS            2        // stereo
-#define SIZE_AUDIO_BUF_SAMPLES  1024     // in samples 4k buffer
-                                         // we will go with 16bit ->
-                                         // (1sf = stereo i16 = 4b)
+#define SIZE_AUDIO_BUF_SAMPLES  1024     // in samples
+
 // --
 
 CPU_6510 ZSP_CPU1;
@@ -92,10 +91,10 @@ int main(int argc, char **argv) {
     println_inf("waiting for sound to finish ...");
     cursor_off(); flush_term();
     while(PL_PLAYING) {
-        progressbar(PL_SAMPLES_TOTAL, PL_SAMPLES_CURRENT, 40);
+        progressbar(PL_SAMPLES_TOTAL, PL_SAMPLES_CURRENT, 40); // width: 40
         SDL_Delay(100);
-    }
-    progressbar(PL_SAMPLES_TOTAL, PL_SAMPLES_CURRENT, 40);
+    }                                              
+    progressbar(PL_SAMPLES_TOTAL, PL_SAMPLES_CURRENT, 40); 
     printf("\n"); cursor_on(); flush_term(); 
     
     SDL_Quit();
