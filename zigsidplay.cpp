@@ -30,7 +30,6 @@
 #define SIZE_AUDIO_BUF_SAMPLES  1024     // in samples 4k buffer
                                          // we will go with 16bit ->
                                          // (1sf = stereo i16 = 4b)
-
 // --
 
 CPU_6510 ZSP_CPU1;
@@ -48,6 +47,7 @@ void init_cmdline_args(CMDLINE_ARGS *args) {
 }
 
 int parse_cmdline(CMDLINE_ARGS *args) { 
+    init_cmdline_args(args);
     return 0; 
 }
 
@@ -69,7 +69,6 @@ int main(int argc, char **argv) {
     term_init();
     print_header();
 
-    init_cmdline_args(&args);
     if (parse_cmdline(&args)) 
         return 1;
     
