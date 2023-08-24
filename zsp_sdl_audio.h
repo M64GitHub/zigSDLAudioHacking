@@ -17,7 +17,8 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
 
 void sdl_audio_play();
 
-#endif
 #ifdef __cplusplus
 }
+#endif
+
 #endif
