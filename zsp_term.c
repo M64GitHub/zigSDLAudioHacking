@@ -107,3 +107,40 @@ void pb_delay(int ms, double pb_width) {
 }
 
 
+void progressbar(int total, int current, int pb_width) {
+    char buf[256];
+                            // (number of "fill chars" ('#')
+    buf[0] = 0x00;          // init buf as empty string
+
+    if(pb_width > 0) {      // 0: dont't draw progress bar
+    // print progress_bar
+        double pct = 100.0 - (((double)total-(double)current)/(double)total) * 100.0;
+
+        print_inf("[WAIT] ");
+        printf("[%3.0f%%] %s| %s", 
+               pct, 
+               TERM_COLOR_LIGHTGRAY, 
+               TERM_COLOR_LIGHTBLUE); 
+
+        current = (pct)/100.0 * (double)pb_width;
+
+        // draw progress bar into buf
+        for(int j=0; j < pb_width; j++) {
+            if(j < current) buf[j] = '#';
+            else buf[j] = '-';
+        }
+        buf[(int)current] = '>';
+
+        if((int) current == ((int)pb_width-1)) buf[(int)current] = '#';
+        buf[(int)pb_width + 0] = 0x00; // terminate string
+
+        printf("%s%s |%s", 
+               buf, 
+               TERM_COLOR_LIGHTGRAY, 
+               TERM_DEFAULT);
+
+        printf("\r"); flush_term(); 
+    } 
+}
+
+

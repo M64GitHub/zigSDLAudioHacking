@@ -29,7 +29,7 @@ void println_dbg(char *msg);
 void println_ok(char *msg);
 void println_err(char *msg);
 
-// void progressbar(int ms, double pb_width);
+void progressbar(int total, int current, int pb_width);
 void pb_delay(int ms, double pb_width);
 
 void cursor_on();

@@ -3,23 +3,25 @@
 #include <SDL2/SDL.h>
 
 #include "testsound_raw.h"
-unsigned int wav_pos = 0;
 
-int PLAYING = 0;
+int PL_PLAYING = 0;
+int PL_SAMPLES_TOTAL = 0;
+int PL_SAMPLES_CURRENT = 0;
 
 static void audio_callback(void *userdata, uint8_t *stream, int len) {
-    if(!PLAYING) return;
+    if(!PL_PLAYING) return;
 
     memset(stream, 0, len);
 
-    if(wav_pos + len >= TEST_raw_len)  {
-        PLAYING = 0;
+    if(PL_SAMPLES_CURRENT + len >= PL_SAMPLES_TOTAL)  {
+        PL_PLAYING = 0;
+        PL_SAMPLES_CURRENT = PL_SAMPLES_TOTAL;
         return; // TODO: do this properly
     }
 
-    memcpy(stream, TEST_raw + wav_pos, len); 
+    memcpy(stream, TEST_raw + PL_SAMPLES_CURRENT, len); 
 
-    wav_pos += len;
+    PL_SAMPLES_CURRENT += len;
 }
 
 int sdl_audio_init(SDL_AudioDeviceID *id, 
@@ -27,7 +29,7 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
                    int sampling_freq,
                    int num_channels,
                    int size_audiobuf) {
-    wav_pos = 0;
+    PL_SAMPLES_CURRENT = 0;
 
     // initialise SDL audio subsystem only
     if (SDL_Init(SDL_INIT_AUDIO)) {
@@ -75,7 +77,9 @@ int sdl_audio_init(SDL_AudioDeviceID *id,
 
 void sdl_audio_play() {
     // start playback
-    PLAYING = 1;
+    PL_SAMPLES_TOTAL = TEST_raw_len;
+    PL_SAMPLES_CURRENT = 0;
+    PL_PLAYING = 1;
 }
 
 

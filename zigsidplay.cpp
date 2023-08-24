@@ -87,15 +87,18 @@ int main(int argc, char **argv) {
                         SIZE_AUDIO_BUF_SAMPLES)) 
         return 2;
 
+
+    println_inf("starting playback");
     sdl_audio_play();
 
-    // audio_test(ZSP_AudioDevID); // uses audio queueing
     println_inf("waiting for sound to finish ...");
-    //       4.4s  40 chars progressbar
-    // pb_delay(4400, 40);
-    while(PLAYING) {
+    cursor_off(); flush_term();
+    while(PL_PLAYING) {
+        progressbar(PL_SAMPLES_TOTAL, PL_SAMPLES_CURRENT, 40);
         SDL_Delay(100);
     }
+    progressbar(PL_SAMPLES_TOTAL, PL_SAMPLES_CURRENT, 40);
+    printf("\n"); cursor_on(); flush_term(); 
 
     SDL_Quit();
     println_blu("READY.");
