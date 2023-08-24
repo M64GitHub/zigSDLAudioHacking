@@ -4,7 +4,7 @@ hacking playground to try out the zig compiler, SDL audio, combinations of C/C++
 The goal is to have handy commandline tools available, which would be great to have to assist me in the audio creation creative work. Ways for inspection on various levels: the C64 cpu, SID registers, work with "editor files" (`.swm`, `.swi`) and so on.
 First parts in C/C++, then rewrite as necessary in zig and use zig build from there on.
 
-## zigsidplay / siddbg
+## zigsidplay / siddbg / swmdbg
 `zigsidplay` will be the first dropout of the experiments, an actual standalone `.sid` music file player, with various visualisation options, I am currently working on. When I reach a usable status with zig build, it will get it's own repository ... I added the logo already, just because I like it a lot ;]
 
 `siddbg` shall become an advanced `.sid` music file player, that allows for displaying / visualizing details of what's going on in the player - routine - so: typical cpu debugger, and new, yet to come SID 'debug' features - like: register display / change on the fly, change filter, etc
