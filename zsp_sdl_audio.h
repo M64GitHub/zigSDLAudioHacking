@@ -20,5 +20,4 @@ void sdl_audio_play();
 #ifdef __cplusplus
 }
 #endif
-
 #endif
