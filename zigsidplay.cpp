@@ -1,10 +1,7 @@
 // ==========================================================================
-// zigsidplay, 2023, M64                                          v00.0.0-dev
+// zigsidplay, 2023, M64 <afk aka M. Schallner>                   v00.0.0-dev
+// <m64.overdrive@gmail.com>
 // --------------------------------------------------------------------------
-// Aimed to become a SID player, using SDL2 to output audio. The sound is 
-// generated utilizing a virtual C64 cpu to send register changes to a 
-// virtual C64 soundchip (SID, emulated by reSID code). 
-// ==========================================================================
 #include <SDL2/SDL.h>
 
 #include <stdio.h>
@@ -21,7 +18,7 @@
 
 // -- arg defaults if not 0:
 
-#define ARG_DEFAULT_BASENOTE    0xB0
+#define ARG_DEFAULT_BASENOTE    0xB0    // C-3
 
 // --  
 
@@ -85,20 +82,20 @@ int main(int argc, char **argv) {
         return 2;
 
 
-    println_inf("starting playback");
+    println_inf( (char *) "starting playback");
     sdl_audio_play();
 
-    println_inf("waiting for sound to finish ...");
+    println_inf( (char *) "waiting for sound to finish ...");
     cursor_off(); flush_term();
     while(PL_PLAYING) {
         progressbar(PL_SAMPLES_TOTAL, PL_SAMPLES_CURRENT, 40); // width: 40
-        SDL_Delay(100);
+        SDL_Delay(150);
     }                                              
     progressbar(PL_SAMPLES_TOTAL, PL_SAMPLES_CURRENT, 40); 
     printf("\n"); cursor_on(); flush_term(); 
     
     SDL_Quit();
-    println_blu("READY.");
+    println_blu( (char *) "READY.");
 
     return 0;
 }

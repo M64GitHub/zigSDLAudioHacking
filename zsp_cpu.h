@@ -28,7 +28,7 @@ typedef struct cpu_6510_s {
     unsigned char y;
 
     unsigned char flags;
-    unsigned char sp;
+    unsigned short sp;
 
     unsigned char mem[0x10000];
 

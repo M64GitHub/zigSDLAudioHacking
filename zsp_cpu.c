@@ -30,7 +30,7 @@ void cpu_init(CPU_6510 *cpu,
     cpu->x  = newx;
     cpu->y  = newy;
 
-    cpu->sp = 0xff;
+    cpu->sp = 0xfffd;
     cpu->flags = 0;
     cpu->cycles = 0;
 
@@ -72,7 +72,7 @@ void cpu_dmp_regs(CPU_6510 *cpu, char *task) {
 
     print_dbg("");
     printf(
-    "%s[CPU][%s] | PC:%04x | A:%s%02x%s X:%s%02x%s Y:%s%02x%s | F:%s%s%s (%02x) | SP:%s%02x%s\n",
+    "%s[CPU][%s] | PC:%04x | A:%s%02x%s X:%s%02x%s Y:%s%02x%s | F:%s%s%s (%02x) | SP:%s%04x%s\n",
         TERM_COLOR_LIGHTGRAY,
         task, 
         cpu->pc, 
