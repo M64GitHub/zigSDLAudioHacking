@@ -10,8 +10,8 @@ public:
 	SDLreSID(void);
 	void begin(void);
 	void setSampleParameters(float clockfreq, float samplerate);
-	// inline void setreg(int ofs, int val) { sid.write(ofs, val); }
-	// inline uint8_t getreg(int ofs) { return sid.read(ofs); }
+	inline void setreg(int ofs, int val) { sid.write(ofs, val); }
+	inline uint8_t getreg(int ofs) { return sid.read(ofs); }
 	void reset(void);
 	void stop(void);
 	inline bool isPlaying(void) { return playing; }	

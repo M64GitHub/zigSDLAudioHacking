@@ -15,7 +15,7 @@ void SDLreSID::begin(void)
 	// sidptr = &sid;
 	this->reset();
 	setSampleParameters(CLOCKFREQ, SAMPLERATE);
-	playing = true;
+	playing = false;
 }
 
 void SDLreSID::setSampleParameters(float clockfreq, float samplerate) 
