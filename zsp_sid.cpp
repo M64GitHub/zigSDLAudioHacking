@@ -1,5 +1,7 @@
 #include "zsp_sid.h"
 
+// include model / filter sets, TODO: make dynamically changeable
+
 #include "reSID/envelope.cc"
 #include "reSID/extfilt.cc"
 #include "reSID/filter.cc"
